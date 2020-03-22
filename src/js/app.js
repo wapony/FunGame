@@ -62,10 +62,6 @@
 
 //         // return tutorialTokenInstance.transfer(toAddress, amount, {from: account, gas: 100000});
 
-//         var etherValue = web3.toWei(amount, 'ether');
-//         // return tutorialTokenInstance.sellEth({ from: account, value: etherValue});
-//         tutorialTokenInstance.sellEth({from: account, value: etherValue});
-
 //       }).then(function(result) {
 //         alert('Transfer Successful!');
 //         return App.getBalances();
