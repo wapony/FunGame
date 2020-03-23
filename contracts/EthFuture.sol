@@ -9,11 +9,12 @@ contract EthFuture is TutorialToken, Ownable {
     uint8 level3Rate;
     uint8 level4Rate;
 
+    // 总共投资ETH的数量
     mapping (address => uint) ownerToEthAmount;
 
     struct InvestInfo {
         uint256 investAmount;   // 投资额度
-        uint256 releasePerDay;  // 每日释放量
+        uint32  investTime;     // 当前投注时间戳
     }
 
     // 记录每笔投资的信息
@@ -26,8 +27,8 @@ contract EthFuture is TutorialToken, Ownable {
     }
 
     // 创建投资信息
-    function _createInvestInfo(uint _investAmount, uint _releasePerDay) private {
-        investInfos.push(InvestInfo(_investAmount, _releasePerDay));
+    function _createInvestInfo(uint _investAmount) private {
+        investInfos.push(InvestInfo(_investAmount, now));
     }
 
     function setLevel1Rate(uint8 _level1Rate) public onlyOwner rateRestrict(_level1Rate) {
@@ -59,6 +60,8 @@ contract EthFuture is TutorialToken, Ownable {
 
     // 投注
     function investGame() public payable returns(bool) {
+        // 调用者的TToken余额为
+
         // 限定最低1个eth起投,低于1个返回错误提示
         require(msg.value >= (10 ** 18));
 
