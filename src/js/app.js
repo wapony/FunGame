@@ -112,13 +112,33 @@
 import Web3 from "web3";
 import TutorialArtifact from "./build/contracts/TutorialToken.json";
 
+
 const App = {
   web3: null,
   account: null,
-
+  TutorialContract: null,
 
   start: async function() {
-    const {web3} = this;
+    const that = this;
+    const { web3 } = that;
+
+    try {
+      // 获取合约实例
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = TutorialArtifact.networks[networkId];
+      that.TutorialContract = new web3.eth.contract(
+        TutorialArtifact.abi,
+        deployedNetwork.address,
+      );
+      
+      // 获取账户
+      const accounts = await web3.eth.getAccounts();
+      that.account = accounts[0];
+      
+
+    } catch (error) {
+      
+    }
   }
 };
 
