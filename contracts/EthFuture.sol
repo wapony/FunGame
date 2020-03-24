@@ -103,8 +103,8 @@ contract EthFuture is TutorialToken, Ownable {
         return address(this).balance;
     }
 
-    // 获取每日的释放额度, 问题有点复杂，需要再想想, 例如：第一次释放的已经释放完，总不能继续释放吧。
-    function getReleaseEthPerDay() internal returns(uint) {
+    // 获取静态每日的释放额度
+    function getStaticReleaseEthPerDay() internal returns(uint) {
         
     }
 
