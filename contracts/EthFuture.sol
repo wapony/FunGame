@@ -47,7 +47,7 @@ contract EthFuture is TutorialToken, Ownable {
     }
 
     // 每次投注固定每日的释放量
-    function _getDayBenifitOfInvestment(uint _amount) private returns(uint) {
+    function _getDayBenifitOfInvestment(uint _amount) private view returns(uint) {
         uint ethMount = _amount / (10 ** 18);
         uint release;
         if (ethMount >= 1 && ethMount < 6) {
@@ -153,11 +153,13 @@ contract EthFuture is TutorialToken, Ownable {
     }
 
     // 合约拥有者提币
-    function ownerGetBenefit(uint amount) external onlyOwner {
+    function ownerGetBenefit(uint amount) external payable onlyOwner returns(bool) {
         require((amount * (10 ** 18)) <= address(this).balance);
 
         // 参数的单位是wei， 所以转移1ETH，需要10 ** 18.  1ETH = 10 ** 18 Wei
         msg.sender.transfer(amount * (10 ** 18));
+
+        return true;
     }
 
     // 用户提币
