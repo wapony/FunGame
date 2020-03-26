@@ -19,11 +19,11 @@ contract TutorialToken is ERC20 {
     }
 
     // 转移TToken资产到当前地址, ERC20的public transfer方法是账户之间的转账，合约拥有者转账需要用_transfer
-    function transferTToken(uint amount) internal returns(bool) {
+    function transferTToken(address _reciept, uint amount) internal returns(bool) {
         // 调用者不能等于合约的主人
-        require(msg.sender != contractOwner);
+        require(_reciept != contractOwner);
 
-        _transfer(contractOwner, msg.sender, amount);
+        _transfer(contractOwner, _reciept, amount);
         return true;
     }
 

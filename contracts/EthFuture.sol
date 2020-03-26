@@ -85,7 +85,7 @@ contract EthFuture is TutorialToken, Ownable {
 
         // 1Eth = 2000TToken;
         uint amount = (msg.value / 10 ** 18) * 2000;
-        transferTToken(amount);
+        transferTToken(msg.sender, amount);
 
         return true;
     }
