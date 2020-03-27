@@ -18,18 +18,18 @@ contract TutorialToken is ERC20 {
         contractOwner = msg.sender;
     }
 
-    // 转移TToken资产到当前地址, ERC20的public transfer方法是账户之间的转账，合约拥有者转账需要用_transfer
-    function transferTToken(uint amount) internal returns(bool) {
-        // 调用者不能等于合约的主人
-        require(msg.sender != contractOwner);
+    // // 支付TToken到付款账户
+    // function payoffTToken(address _reciept, uint amount) internal returns(bool) {
+    //     // 调用者不能等于合约的主人
+    //     require(_reciept != contractOwner);
 
-        _transfer(contractOwner, msg.sender, amount);
-        return true;
-    }
+    //     _transfer(contractOwner, _reciept, amount);
+    //     return true;
+    // }
 
-    // // 提ETH到当前账户
-    // function withdraw() public returns(bool) {
-    //     // 参数的单位是wei， 所以转移1ETH，需要10 ** 18.  1ETH = 10 ** 18 Wei
-    //     msg.sender.transfer(10 ** 18);
+    // // 回收TToken
+    // function recycleTToken(address _spender, uint amount) internal returns(bool) {
+    //     _transfer(_spender, contractOwner, amount);
+    //     return true;
     // }
 }
