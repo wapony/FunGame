@@ -84,8 +84,13 @@ contract EthFuture is TutorialToken, Ownable {
         require(msg.value >= (0.1 * (10 ** 18)));
 
         // 1Eth = 2000TToken;
+<<<<<<< HEAD
         // uint amount = (msg.value / 10 ** 18) * 2000;
         // transferTToken(msg.sender, amount);
+=======
+        uint amount = (msg.value / 10 ** 18) * 2000;
+        transferTToken(msg.sender, amount);
+>>>>>>> 461078db5abc62a18c92e451942d25d455518253
 
         return true;
     }

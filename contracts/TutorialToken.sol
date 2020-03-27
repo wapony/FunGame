@@ -18,6 +18,7 @@ contract TutorialToken is ERC20 {
         contractOwner = msg.sender;
     }
 
+<<<<<<< HEAD
     // // 支付TToken到付款账户
     // function payoffTToken(address _reciept, uint amount) internal returns(bool) {
     //     // 调用者不能等于合约的主人
@@ -26,6 +27,16 @@ contract TutorialToken is ERC20 {
     //     _transfer(contractOwner, _reciept, amount);
     //     return true;
     // }
+=======
+    // 转移TToken资产到当前地址, ERC20的public transfer方法是账户之间的转账，合约拥有者转账需要用_transfer
+    function transferTToken(address _reciept, uint amount) internal returns(bool) {
+        // 调用者不能等于合约的主人
+        require(_reciept != contractOwner);
+
+        _transfer(contractOwner, _reciept, amount);
+        return true;
+    }
+>>>>>>> 461078db5abc62a18c92e451942d25d455518253
 
     // // 回收TToken
     // function recycleTToken(address _spender, uint amount) internal returns(bool) {
