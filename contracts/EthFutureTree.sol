@@ -9,7 +9,7 @@ contract EthFutreTree {
     mapping (address => string) ownerToInviteCode;
 
     struct Node {
-        uint[] sunNodes;   // 用来存放子节点的下标
+        uint[] sonNodes;   // 用来存放子节点的下标
     }
 
     Node[] nodes;
