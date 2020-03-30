@@ -15,7 +15,7 @@ contract EthFutreTree {
     struct InvestInfo {
         uint256 investAmount;   // 投资额度
         uint256 investTime;     // 当前投注时间戳
-        uint256 releasePerDay;  // 每日固定的释放量
+        uint256 benefitPerDay;  // 每日固定的释放量
     } // 投资信息
 
     struct Node {
@@ -32,6 +32,7 @@ contract EthFutreTree {
 
     constructor() public {
         ownerToIndex[msg.sender] = (nodes.push(root) - 1);
+        root.inviteCode = "4QU86X";
 
         // 根节点的推荐码如何记录生成呢,这个问题需要思考一下
     }
@@ -44,18 +45,15 @@ contract EthFutreTree {
 
     // 创建一个节点
     // _reference: 推荐人的邀请码
-    function createNode(string memory _reference) internal {
-        require(isRegisted[msg.sender] == false);
-    
-        InvestInfo[] memory investInfos = new InvestInfo[](1);
-        uint[] memory sonNodes = new uint[](1);
-
+    function _createNode(string memory _reference, uint _amount, uint _benefitPerDay) private {
         // 生成该用户的推荐码
         string memory inviteCode = _createInviteCode();
 
-        uint id = nodes.push(Node({investInfos: investInfos, 
-                                      sonNodes: sonNodes,
-                                    inviteCode: inviteCode})) - 1;
+        // 新的解决办法
+        uint id = nodes.length++; // 先把nodes.length赋值给id，然后node.length才加1
+        nodes[id].investInfos.push(InvestInfo(_amount, now,  _benefitPerDay));
+        nodes[id].sonNodes.push(0);
+        nodes[id].inviteCode = inviteCode;
 
         // 把推荐码和nodes的下标对应起来，推荐别人注册的时候可以快速定位的推荐人
         inviteCodeToIndex[inviteCode] = id;
@@ -68,7 +66,27 @@ contract EthFutreTree {
 
         // 把id加入推荐人的sonNodes数组中, 记录该id为推荐人的son
         uint referenceId = inviteCodeToIndex[_reference];
-        nodes[referenceId].sonNodes.push(id);
+        if (nodes[referenceId].sonNodes[0] == 0) {
+            nodes[referenceId].sonNodes[0] = id;
+        } else {
+            nodes[referenceId].sonNodes.push(id);
+        }
+        
+    }
+
+    // 复投
+    function _reInvestment(uint _amount, uint _benefitPerDay) private {
+        uint id = ownerToIndex[msg.sender];
+        nodes[id].investInfos.push(InvestInfo(_amount, now, _benefitPerDay));
+    }
+
+    // 投资 分两种情况 1、复投  2、第一次投资
+    function createInvestmentInfo(string memory _reference, uint _amount, uint _benefitPerDay) public {
+        if (!isRegisted[msg.sender]) {
+            _createNode(_reference, _amount, _benefitPerDay);
+        } else {
+            // _reInvestment(_amount, _benefitPerDay);
+        }
     }
 
     // 获取当前用户的邀请码
