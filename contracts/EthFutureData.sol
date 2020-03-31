@@ -30,28 +30,28 @@ contract EthFutureData is TutorialToken, Ownable {
     InvestInfo[] public investInfos;
 
     constructor () public {
-        level1Rate = 9;
-        level2Rate = 11;
-        level3Rate = 13;
-        level4Rate = 15;
+        // level1Rate = 9;
+        // level2Rate = 11;
+        // level3Rate = 13;
+        // level4Rate = 15;
     }
 
-    // 设置释放比例
-    function setLevel1Rate(uint8 _level1Rate) public onlyOwner rateRestrict(_level1Rate) {
-        level1Rate = _level1Rate;
-    }
+    // // 设置释放比例
+    // function setLevel1Rate(uint8 _level1Rate) public onlyOwner rateRestrict(_level1Rate) {
+    //     level1Rate = _level1Rate;
+    // }
 
-    function setLevel2Rate(uint8 _level2Rate) public onlyOwner rateRestrict(_level2Rate) {
-        level2Rate = _level2Rate;
-    }
+    // function setLevel2Rate(uint8 _level2Rate) public onlyOwner rateRestrict(_level2Rate) {
+    //     level2Rate = _level2Rate;
+    // }
 
-    function setLevel3Rate(uint8 _level3Rate) public onlyOwner rateRestrict(_level3Rate) {
-        level3Rate = _level3Rate;
-    }
+    // function setLevel3Rate(uint8 _level3Rate) public onlyOwner rateRestrict(_level3Rate) {
+    //     level3Rate = _level3Rate;
+    // }
 
-    function setLevel4Rate(uint8 _level4Rate) public onlyOwner rateRestrict(_level4Rate) {
-        level4Rate = _level4Rate;
-    }
+    // function setLevel4Rate(uint8 _level4Rate) public onlyOwner rateRestrict(_level4Rate) {
+    //     level4Rate = _level4Rate;
+    // }
 
     // 创建投资信息
     function createInvestInfo(uint _investAmount, uint _releasePerDay) internal {

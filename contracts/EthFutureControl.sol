@@ -1,7 +1,45 @@
 pragma solidity >=0.4.19 < 0.7.0;
-import './EthFutureData.sol';
+// import './EthFutureData.sol';
+import './EthFutureTree.sol';
 
-contract EthFutureControl is EthFutureData {
+contract EthFutureControl is EthFutureTree {
+    uint8 public level1Rate;
+    uint8 public level2Rate;
+    uint8 public level3Rate;
+    uint8 public level4Rate;
+
+    // 个人收益
+    mapping (address => uint) public ownerBenefit;
+
+    // 限制释放比例在一个区间，防止输错, 1 ~ 20
+    modifier rateRestrict(uint rate) {
+        require(rate >= 1 && rate <= 20);
+        _;
+    }
+
+    constructor () public {
+        level1Rate = 9;
+        level2Rate = 11;
+        level3Rate = 13;
+        level4Rate = 15;
+    }
+
+    // 设置释放比例
+    function setLevel1Rate(uint8 _level1Rate) external onlyOwner rateRestrict(_level1Rate) {
+        level1Rate = _level1Rate;
+    }
+
+    function setLevel2Rate(uint8 _level2Rate) external onlyOwner rateRestrict(_level2Rate) {
+        level2Rate = _level2Rate;
+    }
+
+    function setLevel3Rate(uint8 _level3Rate) external onlyOwner rateRestrict(_level3Rate) {
+        level3Rate = _level3Rate;
+    }
+
+    function setLevel4Rate(uint8 _level4Rate) external onlyOwner rateRestrict(_level4Rate) {
+        level4Rate = _level4Rate;
+    }
 
     // 购买门票
     function buyTToken() public payable returns(bool) {
@@ -33,8 +71,8 @@ contract EthFutureControl is EthFutureData {
         return release;
     }
 
-    // 投注
-    function investGame() public payable returns(bool) {
+    // 投注, _reference :推荐人的邀请码
+    function investGame(string memory _reference) public payable returns(bool) {
         // 限定最低1个eth起投,低于1个返回错误提示
         require(msg.value >= (10 ** 18));
 
@@ -46,7 +84,8 @@ contract EthFutureControl is EthFutureData {
         // 要求账户ttoken的余额足够门票的支付
         require(ttokenBalance >= needTtoken);
 
-        createInvestInfo(msg.value, _getDayBenefitOfInvestment(msg.value));
+        // createInvestInfo(msg.value, _getDayBenefitOfInvestment(msg.value));
+        createInvestmentInfo(_reference, msg.value, _getDayBenefitOfInvestment(msg.value));
         
         // 扣除账户的门票
         _transfer(msg.sender, contractOwner, needTtoken);
@@ -58,12 +97,12 @@ contract EthFutureControl is EthFutureData {
     function _investInfoReleasePerDay(InvestInfo storage _investInfo) private view returns(uint) {
         uint8 timeDay = (uint8)((now - _investInfo.investTime) / 86400);
 
-        if ((3 * _investInfo.investAmount) > (_investInfo.releasePerDay * timeDay)) {
+        if ((3 * _investInfo.investAmount) > (_investInfo.benefitPerDay * timeDay)) {
             // 还有收益可以释放
-            uint benefitPerDay = (3 * _investInfo.investAmount) - (_investInfo.releasePerDay * timeDay);
-            if (benefitPerDay > _investInfo.releasePerDay) {
+            uint benefitPerDay = (3 * _investInfo.investAmount) - (_investInfo.benefitPerDay * timeDay);
+            if (benefitPerDay > _investInfo.benefitPerDay) {
                 // 剩余的收益 > 单日释放的量
-                return _investInfo.releasePerDay;
+                return _investInfo.benefitPerDay;
             } else {
                 // 剩余的收益 <= 单日释放的量
                 return benefitPerDay;
@@ -75,19 +114,34 @@ contract EthFutureControl is EthFutureData {
         }
     }
 
-    // 获取静态每日的释放额度
-    function getStaticReleaseEthPerDay() public returns(uint) {
-        // 获取msg.sender的所有投资信息
-        for (uint i = 0; i < investInfos.length; i++) {
-            if (investmentToOwner[i] == msg.sender) {
-                InvestInfo storage investInfo = investInfos[i];
-                
-                // 记录截止到当前时间为止用户可以提走的eth
-                ownerBenefit[msg.sender] = ownerBenefit[msg.sender].add(_investInfoReleasePerDay(investInfo));
-            }
+    // 获取一个节点每日的静态收益
+    function _getStaticBenefitPerDayOfNode(Node storage node) private view returns(uint) {
+        uint staticBenefit;
+        for (uint8 i = 0; i < node.investInfos.length; i++) {
+            InvestInfo storage investInfo = node.investInfos[i];
+            staticBenefit = staticBenefit.add(_investInfoReleasePerDay(investInfo));
         }
 
-        return ownerBenefit[msg.sender];
+        return staticBenefit;
+    }
+
+    // 获取当前用户每日的动态收益
+    function _getDynamicBenefitPerDayOfOwner(Node storage node) private view returns(uint) {
+        if (node.sonNodes.length == 0) {
+            return 0;
+        }
+
+        // uint currentId = 
+    }
+
+
+    // 获取当前用户每日的收益，包括静态收益和动态收益
+    function getBenefitPerDay() public view returns(uint) {
+        require(ownerIsRegisted[msg.sender]);
+
+        // Node storage node = nodes[ownerToIndex[msg.sender]];
+        // uint staticBenefit = _getStaticBenefitPerDayOfNode(node);
+
     }
     
     // 获取当前合约账户的余额
