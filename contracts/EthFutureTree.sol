@@ -22,7 +22,7 @@ contract EthFutureTree is TutorialToken, Ownable {
         InvestInfo[] investInfos; // 记录该节点复投的信息
         uint[] sonNodes;          // 用来存放子节点的下标
         string inviteCode;        // 当前节点的推荐码
-        uint8 level;              // 当前节点的level
+        uint8  level;            // 当前节点的level
     } // 节点
 
     // 存放所有投资用户的信息
@@ -71,7 +71,6 @@ contract EthFutureTree is TutorialToken, Ownable {
         // solidity的坑，不能新建一个node,然后在push，要先扩展nodes的length然后直接给下标赋值
         uint id = nodes.length++; // 先把nodes.length赋值给id，然后node.length才加1
         nodes[id].investInfos.push(InvestInfo(_amount, now,  _benefitPerDay));
-        // nodes[id].sonNodes.push(0);
         nodes[id].inviteCode = inviteCode;
         // 首次注册根据投资数额获取初始level
         nodes[id].level = getLevelFromAmount(_amount);
@@ -87,11 +86,6 @@ contract EthFutureTree is TutorialToken, Ownable {
 
         // 把id加入推荐人的sonNodes数组中, 记录该id为推荐人的son
         uint referenceId = inviteCodeToIndex[_reference];
-        // if (nodes[referenceId].sonNodes[0] == 0) {
-        //     nodes[referenceId].sonNodes[0] = id;
-        // } else {
-        //     nodes[referenceId].sonNodes.push(id);
-        // }
         nodes[referenceId].sonNodes.push(id);
     }
 

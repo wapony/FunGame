@@ -131,9 +131,64 @@ contract EthFutureControl is EthFutureTree {
             return 0;
         }
 
-        // uint currentId = 
+        // 第一代
+        uint[] storage firstNodes = node.sonNodes;
+
+        // 第二代
+        uint[] memory secondeArr;
+        uint secondLength = 0;
+        for (uint i=0; i<firstNodes.length; i++) {
+            uint firstId = firstNodes[i];
+            Node storage firstNode = nodes[firstId];
+            secondLength += firstNode.sonNodes.length;
+        }
+
+        secondeArr = new uint[](secondLength);
+        uint secondTempK = 0;
+        for (uint i=0; i<firstNodes.length; i++) {
+            uint firstId = firstNodes[i];
+            Node storage firstNode = nodes[firstId];
+
+            for(uint j=0; j<firstNode.sonNodes.length; j++) {
+                secondeArr[secondTempK] = firstNode.sonNodes[j];
+                secondTempK++;
+            }
+        }
+
+        // 第三代
+        uint[] memory thirdArr;
+        uint thirdLength = 0;
+        for (uint i=0; i<secondeArr.length; i++) {
+            uint secondId = secondeArr[i];
+            Node storage secondNode = nodes[secondId];
+            thirdLength += secondNode.sonNodes.length;
+        }
+
+        thirdArr = new uint[](thirdLength);
+        uint thirdTempK = 0;
+        for (uint i=0; i<secondeArr.length; i++) {
+            uint secondId = secondeArr[i];
+            Node storage secondNode = nodes[secondId];
+
+            for (uint j=0; j<secondNode.sonNodes.length; j++) {
+                thirdArr[thirdTempK] = secondNode.sonNodes[j];
+                thirdTempK++;
+            }
+        }
     }
 
+    // // 获取当前节点的所有子节点的下标
+    // function _getSonNodesBenefitPerDay(Node storage node) private view returns(uint[] memory) {
+    //     uint[] memory results = new uint[](node.sonNodes.length);
+
+    //     for (uint i=0; i<node.sonNodes.length; i++) {
+    //         results[i] = node.sonNodes[i];
+    //     }
+
+    //     return results;
+    // }
+
+    
 
     // 获取当前用户每日的收益，包括静态收益和动态收益
     function getBenefitPerDay() public view returns(uint) {
