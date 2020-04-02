@@ -22,7 +22,7 @@ contract EthFutureTree is TutorialToken, Ownable {
         InvestInfo[] investInfos; // 记录该节点复投的信息
         uint[] sonNodes;          // 用来存放子节点的下标
         string inviteCode;        // 当前节点的推荐码
-        uint8  level;            // 当前节点的level
+        uint8  level;             // 当前节点的等级
     } // 节点
 
     // 存放所有投资用户的信息
@@ -36,6 +36,7 @@ contract EthFutureTree is TutorialToken, Ownable {
         ownerIsRegisted[msg.sender] = true;
 
         // 根节点的推荐码如何记录生成呢,这个问题需要思考一下
+        root.level = 10;
         root.inviteCode = "4QU86X";
     }
 
@@ -46,7 +47,7 @@ contract EthFutureTree is TutorialToken, Ownable {
     }
 
     // 根据投资量计算等级
-    function getLevelFromAmount(uint _amount) public pure returns(uint8) {
+    function _getLevelFromAmount(uint _amount) private pure returns(uint8) {
         uint ethAmount = _amount / (10 ** 18);
         uint8 level;
         if (ethAmount >= 1 && ethAmount < 6) {
@@ -73,7 +74,7 @@ contract EthFutureTree is TutorialToken, Ownable {
         nodes[id].investInfos.push(InvestInfo(_amount, now,  _benefitPerDay));
         nodes[id].inviteCode = inviteCode;
         // 首次注册根据投资数额获取初始level
-        nodes[id].level = getLevelFromAmount(_amount);
+        nodes[id].level = _getLevelFromAmount(_amount);
 
         // 把推荐码和nodes的下标对应起来，推荐别人注册的时候可以快速定位的推荐人
         inviteCodeToIndex[inviteCode] = id;
@@ -99,7 +100,7 @@ contract EthFutureTree is TutorialToken, Ownable {
             totalAmount = totalAmount.add(nodes[id].investInfos[i].investAmount);
         }
         // 更新node的level
-        nodes[id].level = getLevelFromAmount(totalAmount);
+        nodes[id].level = _getLevelFromAmount(totalAmount);
     }
 
     // 投资 分两种情况 1、复投  2、第一次投资

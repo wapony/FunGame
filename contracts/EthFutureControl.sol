@@ -8,6 +8,13 @@ contract EthFutureControl is EthFutureTree {
     uint8 public level3Rate;
     uint8 public level4Rate;
 
+    uint16 public firstRate;  // 动态第一代
+    uint16 public secondRate; // 动态第二代
+    uint8 public thirdRate;   // 动态第三代
+    uint8 public forthToTenRate;  // 4-10代
+    uint8 public elevenToTwentyRate; // 11-20代
+    uint8 public moreRate;           // 20代以后
+
     // 个人收益
     mapping (address => uint) public ownerBenefit;
 
@@ -22,6 +29,13 @@ contract EthFutureControl is EthFutureTree {
         level2Rate = 11;
         level3Rate = 13;
         level4Rate = 15;
+
+        firstRate = 500;
+        secondRate = 300;
+        thirdRate = 200;
+        forthToTenRate = 100;
+        elevenToTwentyRate = 10;
+        moreRate = 5;
     }
 
     // 设置释放比例
@@ -132,71 +146,101 @@ contract EthFutureControl is EthFutureTree {
         }
 
         // 第一代
-        uint[] storage firstNodes = node.sonNodes;
+        uint[] memory firstNodes = node.sonNodes;
+        uint firstBenefit;
+        for (uint i=0; i<node.sonNodes.length; i++) {
+            Node storage sonNode = nodes[node.sonNodes[i]];
+            firstBenefit = firstBenefit.add(_getStaticBenefitPerDayOfNode(sonNode));
+        }        
 
-        // 第二代
-        uint[] memory secondeArr;
-        uint secondLength = 0;
-        for (uint i=0; i<firstNodes.length; i++) {
-            uint firstId = firstNodes[i];
-            Node storage firstNode = nodes[firstId];
-            secondLength += firstNode.sonNodes.length;
+        // 总共可以拿多少代
+        uint count;
+        if (node.level == 1) {
+            count = 1;
+        } else if (node.level == 2) {
+            count = 10;
+        } else if (node.level == 3) {
+            count = 20;
+        } else if (node.level == 4) {
+            count = 40;
+        } else {
+            count = 1;
         }
 
-        secondeArr = new uint[](secondLength);
-        uint secondTempK = 0;
-        for (uint i=0; i<firstNodes.length; i++) {
-            uint firstId = firstNodes[i];
-            Node storage firstNode = nodes[firstId];
 
-            for(uint j=0; j<firstNode.sonNodes.length; j++) {
-                secondeArr[secondTempK] = firstNode.sonNodes[j];
-                secondTempK++;
+        uint[] memory tempArr = firstNodes;
+        uint[] memory benefits = new uint[](count);
+        benefits[0] = firstBenefit;
+
+        //从第二代开始计算
+        for (uint i=2; i<=count; i++) {
+            (tempArr, benefits[i-1]) = _getSonNodesArrayAndBenefit(tempArr);
+        }
+
+        
+        uint dynamicBenefit;    // 动态奖金
+        for (uint i=0; i<benefits.length; i++) {
+            if (i == 0) {
+                dynamicBenefit += benefits[i] * firstRate / 1000;
+            } else if (i == 1) {
+                dynamicBenefit += benefits[i] * secondRate / 1000;
+            } else if (i == 2) {
+                dynamicBenefit += benefits[i] * thirdRate / 1000;
+            } else if (i >= 3 && i < 10) {
+                dynamicBenefit += benefits[i] * forthToTenRate / 1000;
+            } else if (i >= 10 && i < 20 ) {
+                dynamicBenefit += benefits[i] * elevenToTwentyRate / 1000;
+            } else {
+                dynamicBenefit += benefits[i] * moreRate / 1000;
             }
         }
 
-        // 第三代
-        uint[] memory thirdArr;
-        uint thirdLength = 0;
-        for (uint i=0; i<secondeArr.length; i++) {
-            uint secondId = secondeArr[i];
-            Node storage secondNode = nodes[secondId];
-            thirdLength += secondNode.sonNodes.length;
-        }
-
-        thirdArr = new uint[](thirdLength);
-        uint thirdTempK = 0;
-        for (uint i=0; i<secondeArr.length; i++) {
-            uint secondId = secondeArr[i];
-            Node storage secondNode = nodes[secondId];
-
-            for (uint j=0; j<secondNode.sonNodes.length; j++) {
-                thirdArr[thirdTempK] = secondNode.sonNodes[j];
-                thirdTempK++;
-            }
-        }
+        return dynamicBenefit;
     }
 
-    // // 获取当前节点的所有子节点的下标
-    // function _getSonNodesBenefitPerDay(Node storage node) private view returns(uint[] memory) {
-    //     uint[] memory results = new uint[](node.sonNodes.length);
+    // 获取下一代所有子节点的下标数组和收益
+    function _getSonNodesArrayAndBenefit(uint[] memory _array) private view returns(uint[] memory, uint) {
+        uint[] memory sonNodes;
+        uint sonNodesLength = 0;
 
-    //     for (uint i=0; i<node.sonNodes.length; i++) {
-    //         results[i] = node.sonNodes[i];
-    //     }
+        for (uint i=0; i<_array.length; i++) {
+            uint currentId = _array[i];
+            Node storage currentNode = nodes[currentId];
+            sonNodesLength += currentNode.sonNodes.length;
+        }
 
-    //     return results;
-    // }
+        if (sonNodesLength != 0) {
+            sonNodes = new uint[](sonNodesLength);
+        }
 
-    
+        uint tempK = 0; // sonNodes下标
+        uint totalSonBenefit;
+        for (uint i=0; i<_array.length; i++) {
+            uint currentId = _array[i];
+            Node storage currentNode = nodes[currentId];
+
+            for (uint j=0; j<currentNode.sonNodes.length; j++) {
+                sonNodes[tempK] = currentNode.sonNodes[j];
+                tempK++;
+
+                // 这里已经遍历到所有子节点了，所以可以直接计算所有子节点的静态收益了
+                Node storage sonNode = nodes[currentNode.sonNodes[j]];
+                totalSonBenefit = totalSonBenefit.add(_getStaticBenefitPerDayOfNode(sonNode));
+            }
+        }
+
+        return(sonNodes, totalSonBenefit);
+    }
 
     // 获取当前用户每日的收益，包括静态收益和动态收益
     function getBenefitPerDay() public view returns(uint) {
         require(ownerIsRegisted[msg.sender]);
 
-        // Node storage node = nodes[ownerToIndex[msg.sender]];
-        // uint staticBenefit = _getStaticBenefitPerDayOfNode(node);
+        Node storage node = nodes[ownerToIndex[msg.sender]];
+        uint staticBenefit = _getStaticBenefitPerDayOfNode(node);
+        uint dynamicBenefit = _getDynamicBenefitPerDayOfOwner(node);
 
+        return staticBenefit + dynamicBenefit;
     }
     
     // 获取当前合约账户的余额
