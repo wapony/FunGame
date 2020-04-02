@@ -1,6 +1,5 @@
 pragma solidity >=0.4.19 < 0.7.0;
 import './TutorialToken.sol';
-import '../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol';
 
 contract EthFuture is TutorialToken, Ownable {
 

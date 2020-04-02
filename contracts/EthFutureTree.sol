@@ -1,6 +1,5 @@
 pragma solidity >=0.4.19 < 0.7.0;
 import './TutorialToken.sol';
-import '../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol';
 
 contract EthFutureTree is TutorialToken, Ownable {
     // 邀请码与数组下标对应起来,用来快速找到推荐人
