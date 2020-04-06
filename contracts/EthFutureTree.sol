@@ -30,19 +30,32 @@ contract EthFutureTree is TutorialToken, Ownable {
     // 根节点
     Node root;
 
+    // 邀请码生成源
+    string source = "E5FCDG3HQA4B1NOPIJ2RSTUV67MWX89KLYZ";
+
     constructor () public {
         ownerToIndex[msg.sender] = (nodes.push(root) - 1);
         ownerIsRegisted[msg.sender] = true;
 
         // 根节点的推荐码如何记录生成呢,这个问题需要思考一下
-        root.level = 10;
+        root.level = 4;
+
+        // 根节点的邀请码要提前计算出
         root.inviteCode = "4QU86X";
     }
 
     // 根据数组的下标生成一个6位数的邀请码
     function _createInviteCode() private pure returns(string memory) {
-        string memory inviteCode = "4QU86X";
-        return inviteCode;
+        bytes memory result = new bytes(6);
+        uint160 num = uint160(msg.sender);
+
+        for (uint i=0; i<result.length; i++) {
+            uint160 temp = num % 35;
+            num = (num - temp) / 35;
+            result[i] = bytes(source)[temp];
+        }
+        
+        return string(result);
     }
 
     // 根据投资量计算等级
