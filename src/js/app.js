@@ -25,7 +25,7 @@ App = {
   },
 
   initContract: function () {
-    $.getJSON('TutorialToken.json', function (data) {
+    $.getJSON('EthFutureControl.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var TutorialTokenArtifact = data;
       App.contracts.TutorialToken = TruffleContract(TutorialTokenArtifact);
@@ -44,9 +44,13 @@ App = {
     $(document).on('click', '#transferButton', App.handleTransfer);
   },
 
+  bindEvents: function () {
+    $(document).on('click', '#tiketButton', App.handleBuyTicket);
+  },
+
   handleTransfer: function (event) {
     event.preventDefault();
-
+    
     var amount = parseInt($('#TTTransferAmount').val());
     var toAddress = $('#TTTransferAddress').val();
 
@@ -72,6 +76,35 @@ App = {
         console.log(err.message);
       });
     });
+  },
+
+//点击事件--购买门票
+  handleBuyTicket: function (event) {
+    event.preventDefault();
+    
+    var ethnum = parseInt($('#ethnumberId').val());
+
+    console.log('Transfer ' + ethnum );
+    web3.eth.getAccounts(function (error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      console.log(account);
+    });
+    var abi = [{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"sendCoin","outputs":[{"name":"sufficient","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"getBalance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"}];
+// 合约地址
+var address = "0x73191C282Ae3D6D545A230D1B0232448e821DcBA";
+// 通过ABI和地址获取已部署的合约对象
+var myContact = web3.eth.contract(abi).at(address);
+console.info("合约"+myContact);
+var names="";       
+        for(var name in myContact){       
+           names+=name+": "+myContact[name]+", ";  
+        }  
+        alert(names);
+//myContact.buyTToken();
   },
 
   getBalances: function () {
@@ -105,6 +138,6 @@ App = {
 $(function () {
   $(window).on("load", function () {
     App.init();
-    
+
   });
 });
