@@ -27,11 +27,11 @@ App = {
   initContract: function () {
     $.getJSON('EthFutureControl.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
-      var TutorialTokenArtifact = data;
-      App.contracts.TutorialToken = TruffleContract(TutorialTokenArtifact);
+      var EthFutureControlArtifact = data;
+      App.contracts.EthFutureControl = TruffleContract(EthFutureControlArtifact);
 
       // Set the provider for our contract.
-      App.contracts.TutorialToken.setProvider(App.web3Provider);
+      App.contracts.EthFutureControl.setProvider(App.web3Provider);
 
       // Use our contract to retieve and mark the adopted pets.
       return App.getBalances();
@@ -56,7 +56,7 @@ App = {
 
     console.log('Transfer ' + amount + ' TT to ' + toAddress);
 
-    var tutorialTokenInstance;
+    var ethFutureControlInstance;
 
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
@@ -65,10 +65,10 @@ App = {
 
       var account = accounts[0];
 
-      App.contracts.TutorialToken.deployed().then(function (instance) {
-        tutorialTokenInstance = instance;
+      App.contracts.EthFutureControl.deployed().then(function (instance) {
+        ethFutureControlInstance = instance;
 
-        return tutorialTokenInstance.transfer(toAddress, amount, { from: account, gas: 100000 });
+        return ethFutureControlInstance.transfer(toAddress, amount, { from: account, gas: 100000 });
       }).then(function (result) {
         alert('Transfer Successful!');
         return App.getBalances();
@@ -110,7 +110,7 @@ var names="";
   getBalances: function () {
     console.log('Getting balances...');
 
-    var tutorialTokenInstance;
+    var ethFutureControlInstance;
 
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
@@ -119,10 +119,10 @@ var names="";
 
       var account = accounts[0];
 
-      App.contracts.TutorialToken.deployed().then(function (instance) {
-        tutorialTokenInstance = instance;
+      App.contracts.EthFutureControl.deployed().then(function (instance) {
+        ethFutureControlInstance = instance;
 
-        return tutorialTokenInstance.balanceOf(account);
+        return ethFutureControlInstance.balanceOf(account);
       }).then(function (result) {
         balance = result.c[0];
 

@@ -1,5 +1,5 @@
-var TutorialToken = artifacts.require("EthFutureControl");
+var EthFutureControl = artifacts.require("EthFutureControl");
 
 module.exports = function (deployer) {
-    deployer.deploy(TutorialToken);
+    deployer.deploy(EthFutureControl);
 };
