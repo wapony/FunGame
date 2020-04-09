@@ -1,5 +1,5 @@
-var EthFutureControl = artifacts.require("EthFutureControl");
+var EthFuture = artifacts.require("EthFutureControl");
 
 module.exports = function (deployer) {
-    deployer.deploy(EthFutureControl);
+    deployer.deploy(EthFuture);
 };
