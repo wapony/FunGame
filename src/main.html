@@ -17,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body background="../image/bg.jpg">
+  <body background="bg.jpg">
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
@@ -31,24 +31,27 @@
         <div class="col-sm-6 col-sm-push-3 col-md-4 col-md-push-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">我的主页</h3>
+              <h3 class="panel-title">立即体验</h3>
             </div>
             <div class="panel-body">
               <h4>数量</h4>
-              <input type="text" class="form-control" id="ethnumberId" placeholder="输入数字" />
+			  <button class="numclass" id="num1" value = '1' type="button">1</button>
+			  <button class="numclass" id="num2" value = '3' type="button">3</button>
+			  <button class="numclass" id="num3" value = '5' type="button">5</button>
+			  <button class="numclass" id="num4" value = '10' type="button">10</button>
+			  <button class="numclass" id="num5" value = '20' type="button">20</button>
+			  <button class="numclass" id="num6" value = '30' type="button">30</button>
+              <input type="text" class="form-control" id="enterNumId" placeholder="输入数字" />
               <button class="btn btn-primary" id="tiketButton" type="button">购买门票</button>
 			  <button class="btn btn-primary" id="buyButton" type="button">立即投注</button>
-			  <a href="./account.html">我的账户</a>
             </div>
           </div>
         </div>
       </div>
     </div>
 	<div id="petsRow1" >
-        <h5>合约简介</h5>
-		<h5>本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊
-		本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊本合约是基于以太坊
-		本合约是基于以太坊本合约是基于以太坊</h5>
+        <h5>简介</h5>
+		<h5>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</h5>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins)
@@ -58,12 +61,12 @@
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
   -->
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
-    <script src="js/app.js"></script>
-    
-    
+    <!-- <script src="js/app.js"></script> -->
+    <script type="module" src="js/main.js"></script>
+
   </body>
 </html>

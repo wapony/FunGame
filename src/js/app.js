@@ -47,33 +47,35 @@ App = {
   },
 
   handleTransfer: function (event) {
-    event.preventDefault();
+    // event.preventDefault();
     
-    var amount = parseInt($('#TTTransferAmount').val());
-    var toAddress = $('#TTTransferAddress').val();
+    // var amount = parseInt($('#TTTransferAmount').val());
+    // var toAddress = $('#TTTransferAddress').val();
 
-    console.log('Transfer ' + amount + ' TT to ' + toAddress);
+    // console.log('Transfer ' + amount + ' TT to ' + toAddress);
 
-    var ethFutureInstance;
+    // var ethFutureInstance;
 
-    web3.eth.getAccounts(function (error, accounts) {
-      if (error) {
-        console.log(error);
-      }
+    // web3.eth.getAccounts(function (error, accounts) {
+    //   if (error) {
+    //     console.log(error);
+    //   }
 
-      var account = accounts[0];
+    //   var account = accounts[0];
 
-      App.contracts.EthFuture.deployed().then(function (instance) {
-        ethFutureInstance = instance;
+    //   App.contracts.EthFuture.deployed().then(function (instance) {
+    //     ethFutureInstance = instance;
 
-        return ethFutureInstance.transfer(toAddress, amount, { from: account, gas: 100000 });
-      }).then(function (result) {
-        alert('Transfer Successful!');
-        return App.getBalances();
-      }).catch(function (err) {
-        console.log(err.message);
-      });
-    });
+    //     return ethFutureInstance.transfer(toAddress, amount, { from: account, gas: 100000 });
+    //   }).then(function (result) {
+    //     alert('Transfer Successful!');
+    //     return App.getBalances();
+    //   }).catch(function (err) {
+    //     console.log(err.message);
+    //   });
+    // });
+
+    window.location.href = "./main.html";
   },
 
   //点击事件--购买门票
@@ -159,3 +161,4 @@ $(function () {
 
   });
 });
+

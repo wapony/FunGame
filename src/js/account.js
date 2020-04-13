@@ -1,36 +1,41 @@
-$(function(){  
-$('.pop_main').hide();
-    var param = { name: 'CodePlayer', age: 18 ,kk:'abc'};
-	//getEthButtonClick(param);
+$(function(){ 
+	//封装查询数据todo
+    var mydata={basenum1:"123",basenum2:236,basenum3:236,basenum4:236,basenum5:236,basenum6:236,basenum7:236,basenum8:236,basenum9:236,basenum10:236,basenum11:236,basenum12:236,basenum13:236};
+	showData(mydata);
+	getoutETH();
 }); 
 
-function getEthButtonClick(param){
-    $("#getEthButton").click( param,function(event){
-        //以太坊逻辑
-		var ethNumner = $("#ethnumberId").val();
-		
-		$('.pop_main').show()
-            //设置animate动画初始值
-            $('.pop_con').css({'top':0,'opacity':0})
-            $('.pop_con').animate({'top':'50%','opacity':1})
-		
-    } );
+function showData(mydata){
+	$("#id1").val(mydata.basenum1);
+    $("#id2").val(mydata.basenum2);
+	$("#id3").val(mydata.basenum3);
+    $("#id4").val(mydata.basenum4);
+	$("#id5").val(mydata.basenum5);
+    $("#id6").val(mydata.basenum6);
+	$("#id7").val(mydata.basenum7);
+    $("#id8").val(mydata.basenum8);
+	$("#id9").val(mydata.basenum9);
+    $("#id10").val(mydata.basenum10);
+	$("#id11").val(mydata.basenum11);
+    $("#id12").val(mydata.basenum12);
+	$("#id13").val(mydata.basenum13);
+    
+}
+function getoutETH(){
+	//数量
+	var num=$("#id13").val();
+	//密码
+	
+	//按钮点击事件
+	$("#getethButton").click(function(){
+		//调用接口todo
+		var pwd =$("#pwdId").val();
+		alert(pwd);
+	});
+	
 }
 
-
-function getOutEthButtonClick(param){
-    $("#getEthButton").click( param,function(event){
-        //以太坊逻辑
-		var ethNumner = $("#ethnumberId").val();
-		
-		$('.pop_main').show()
-            //设置animate动画初始值
-            $('.pop_con').css({'top':0,'opacity':0})
-            $('.pop_con').animate({'top':'50%','opacity':1})
-		
-    } );
-}
-
+<<<<<<< HEAD
 
 
 function ShowDiv(show_div, bg_div) {
@@ -47,3 +52,5 @@ function CloseDiv(show_div, bg_div) {
     document.getElementById(show_div).style.display = 'none';
     document.getElementById(bg_div).style.display = 'none';
 };
+=======
+>>>>>>> af24a069da4e84ae2ac6dea4b2708a531ba2a7d2
