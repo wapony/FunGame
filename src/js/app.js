@@ -75,7 +75,7 @@ App = {
     //   });
     // });
 
-    window.location.href = "./main.html";
+    window.location.href = "main.html";
   },
 
   //点击事件--购买门票

@@ -35,7 +35,6 @@ function getoutETH(){
 	
 }
 
-<<<<<<< HEAD
 
 
 function ShowDiv(show_div, bg_div) {
@@ -52,5 +51,3 @@ function CloseDiv(show_div, bg_div) {
     document.getElementById(show_div).style.display = 'none';
     document.getElementById(bg_div).style.display = 'none';
 };
-=======
->>>>>>> af24a069da4e84ae2ac6dea4b2708a531ba2a7d2
