@@ -1,5 +1,4 @@
 pragma solidity >=0.4.19 < 0.7.0;
-// import './EthFutureData.sol';
 import './EthFutureTree.sol';
 
 contract EthFutureControl is EthFutureTree {
@@ -60,7 +59,7 @@ contract EthFutureControl is EthFutureTree {
         require(msg.value >= (0.1 * (10 ** 18)));
         
         // 1Eth = 2000TToken;
-        uint amount = (msg.value / 10 ** 18) * 2000;
+        uint amount = msg.value.mul(2000) / 10 ** 18;
 
         // 转移对应的token到购买者的账户
         _transfer(contractOwner, msg.sender, amount);
@@ -87,18 +86,25 @@ contract EthFutureControl is EthFutureTree {
 
     // 投注, _reference :推荐人的邀请码
     function investGame(string memory _reference) public payable returns(bool) {
+        // 首次投注并且没有邀请码
+        if (ownerIsRegisted[msg.sender] == false && bytes(_reference).length == 0) {
+            return false;
+        }
+
+        // ？当用户输入的邀请码是无效的邀请码如何处理？  直接默认为首用户
+
         // 限定最低1个eth起投,低于1个返回错误提示
         require(msg.value >= (10 ** 18));
 
         // 调用者的TToken余额为
         uint ttokenBalance = balanceOf(msg.sender);
         // 1eth = 2000Token, 门票为投注eth的 十分之一
-        uint needTtoken = (msg.value / (10 ** 18) ) * (2000 / 10);
+        uint needTtoken = msg.value.mul(2000 / 10) / (10 ** 18);
 
         // 要求账户ttoken的余额足够门票的支付
         require(ttokenBalance >= needTtoken);
 
-        // createInvestInfo(msg.value, _getDayBenefitOfInvestment(msg.value));
+        // 复投不对邀请码做校验
         createInvestmentInfo(_reference, msg.value, _getDayBenefitOfInvestment(msg.value));
         
         // 扣除账户的门票
@@ -243,6 +249,22 @@ contract EthFutureControl is EthFutureTree {
         return staticBenefit + dynamicBenefit;
     }
     
+    // 获取当前用户的邀请码
+    function getInvestorCode() public view returns(string memory) {
+        if (ownerIsRegisted[msg.sender] == false) {
+            return "该用户尚未注册无法获取邀请码";
+        } else {
+            return _createInviteCode();
+        }
+    }
+
+    // ？获取当前用户下所有子节点的个数，
+    function getSonNodesCount() public view returns(uint) {
+        Node storage node = nodes[ownerToIndex[msg.sender]];
+
+        return node.sonNodes.length;
+    }
+
     // 获取当前合约账户的余额
     function getContractBalanceOfEth() public view returns(uint) {
         return address(this).balance;

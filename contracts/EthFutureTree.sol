@@ -45,7 +45,7 @@ contract EthFutureTree is TutorialToken, Ownable {
     }
 
     // 根据数组的下标生成一个6位数的邀请码
-    function _createInviteCode() private view returns(string memory) {
+    function _createInviteCode() internal view returns(string memory) {
         bytes memory result = new bytes(6);
         uint160 num = uint160(msg.sender);
 
