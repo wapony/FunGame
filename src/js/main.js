@@ -79,9 +79,12 @@ App = {
 
 						return ethFutureInstance.buyTToken({from: account, value: etherValue});
 					}).then(function (result) {
-						App.getBalance();
+						App.getEthBalance();
+
+						//购买门票成功以后刷新门票余额
+						App.getTTokenBalace();
 					}).catch(function (error) {
-						alert("error");
+						alert(error);
 					});
 				} else {
 					alert("自己不能向自己买Token");
@@ -126,7 +129,7 @@ App = {
 				}).then(function(result) {
 					App.getEthBalance();
 				}).catch(function(error) {
-					alert("error");
+					alert(error);
 				});
 
 			});
@@ -176,15 +179,17 @@ App = {
 
 	// 获取用户的推荐码
 	getInvestorCode: function() {
-		var ethFutureInstance;
-		App.contracts.EthFuture.deployed().then(function (instance) {
-			ethFutureInstance = instance;
-			return ethFutureInstance.getInvestorCode();
-		}).then(function (result) {
-			alert(result);
-		}).catch(function (error) {
-			alert(error);
-		});
+		// var ethFutureInstance;
+		// App.contracts.EthFuture.deployed().then(function (instance) {
+		// 	ethFutureInstance = instance;
+		// 	return ethFutureInstance.getInvestorCode();
+		// }).then(function (result) {
+		// 	alert(result);
+		// }).catch(function (error) {
+		// 	alert(error);
+		// });
+
+		App.killEveryone();
 	},
 
 	// 获取推荐人的邀请码
@@ -198,6 +203,38 @@ App = {
 				}
 		}
        return(false);
+	},
+
+	/** 
+	 * 获取当前用户所有子节点的数量
+	 */
+	getSonNodesCount: function() {
+		web3.eth.getAccounts(function (error, accounts) {
+			var account = accounts[0];
+
+			App.contracts.EthFuture.deployed().then(function (instance) {
+				return instance.getSonNodesCount({from: accounts});
+			}).then(function(result) {
+				alert("直推人数= " + result);
+			}).catch(function(error) {
+				alert(error);
+			});
+		});
+	},
+
+	/**
+	 * 销毁合约把合约账户余额转移到拥有者账户
+	 */
+	killEveryone: function() {
+		web3.eth.getAccounts(function(error, accounts) {
+			var account = accounts[0];
+
+			App.contracts.EthFuture.deployed().then(function(instance) {
+				instance.destroyContract();
+			}).catch(function(error) {
+				alert(error);
+			});
+		});
 	}
 };
 
