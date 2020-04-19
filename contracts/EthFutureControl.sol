@@ -278,4 +278,9 @@ contract EthFutureControl is EthFutureTree {
 
         return true;
     }
+
+    //  合约销毁
+    function destroyContract() external onlyOwner {
+        selfdestruct(msg.sender);
+    }
 }
