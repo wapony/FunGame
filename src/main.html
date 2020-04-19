@@ -13,8 +13,9 @@
 	.ellipse{
   width: 340px;
   height: 80px;
-  margin: 10px;
-  background: #81F7F3;
+  margin-top: 10px;
+  margin-left: 1px;
+  background: #4F9D9D;
   border-radius: 5px;
   
 }
@@ -22,19 +23,24 @@
 .ellipse1{
   width: 340px;
   height: 40px;
-  margin: 10px;
-  background: #81F7F3;
+  margin-top: 10px;
+  margin-left: 1px;
+  background: #4F9D9D;
   border-radius: 5px;
   
 }
-	</style>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+.ellipse2{
+  width: 340px;
+  height: 40px;
+  margin-top: 1px;
+  margin-left: 1px;
+  background: #4F9D9D;
+  border-radius: 5px;
+}
+#etherBalanceId { background:#4F9D9D;border:none;}
+
+	</style>
   </head>
   <body background="bg.jpg">
     <div class="container">
@@ -52,31 +58,31 @@
             <div class="panel-heading">
               <h3 class="panel-title">立即体验</h3>
             </div>
-            <div class="panel-body">
+            <div style="height:250px" class="panel-body" >
+			<div class="ellipse2">
+				<a style="margin-right:42px;margin-top:5px;display:inline-block;width: 50px;height:50px;text-indent:35px;background:url(./icon/my.png) no-repeat;" href ='./about.html' ></a>
+				<a style="margin-right:42px;display:inline-block;width: 50px;height:50px;text-indent:35px;background:url(./icon/me.png) no-repeat;" href ='./account.html' ></a>
+				<a style="margin-right:42px;display:inline-block;width: 50px;height:50px;text-indent:35px;background:url(./icon/share.png) no-repeat;"  href ='./share.html'></a>
+				<a style="display:inline-block;width: 50px;height:50px;text-indent:35px;background:url(./icon/course.png) no-repeat;" href ='./course.html' ></a>
+			</div>
 			<div class="ellipse1">
-				<span>总计</span>
-				<input  id="totalNum" value = '1000' type="text"> aa</input><br/>
+				<span style="color:#666; font-size:20px;">总计：</span>
+				<input  id="etherBalanceId"  type="text"> </input><br/>
 			</div>
 			
-			<div class="ellipse1">
-				<a href ='./about.html'>关于</a>
-				<a href ='./account.html'>我的</a>
-				<a href ='./share.html'>分享</a>
-				<a href ='./course.html'>教程</a>
-			</div>
+			
 			<div class="ellipse">
-              <h4>数量</h4>
+              <h4 style="color:#666; font-size:20px;">数量</h4>
 			  <button class="numclass" id="num1" value = '1' type="button">1</button>
 			  <button class="numclass" id="num2" value = '3' type="button">3</button>
 			  <button class="numclass" id="num3" value = '5' type="button">5</button>
 			  <button class="numclass" id="num4" value = '10' type="button">10</button>
 			  <button class="numclass" id="num5" value = '20' type="button">20</button>
 			  <button class="numclass" id="num6" value = '30' type="button">30</button>
-              <input type="text" class="form-control" id="enterNumId" placeholder="输入数字" />
-			  <button class="btn btn-primary" id="tiketButton" type="button">购买门票</button>
-              <button class="btn btn-primary" id="buyButton" type="button">立即投注</button>
+              <input type="text"   id="enterNumId"  style="background:#4F9D9D;" placeholder="输入数字" /><br>
+			  <button class="btn btn-primary" style="margin-right:20px;margin-left:15px;" id="tiketButton" type="button">购买门票</button>
+              <button class="btn btn-primary" style="margin-right:20px;" id="buyButton" type="button">立即投注</button>
              <button class="btn btn-primary" id="showCodeButton" type="button">获取邀请码</button>
-             <input type="text" id="etherBalanceId"/>
 		</div>
             </div>
           </div>
