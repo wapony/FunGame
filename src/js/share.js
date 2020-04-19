@@ -9,7 +9,7 @@ function copy(){
 		
 		var clipboard = new ClipboardJS("#copyButton",{
         text : function(){
-            //寻找被激活的那个div pre元素,同时获取它下面的内容
+            
             return $("#target").val();
         }
     });
