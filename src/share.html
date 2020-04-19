@@ -34,7 +34,8 @@
               <h3 class="panel-title">邀请链接</h3>
 			  <h3 class="panel-title">参与投注========</h3>
 			  <h5 >您的邀请链接</h3>
-			  <input type="text" class="form-control" id="shareid" placeholder="shareAddress" />
+			  <input type="text" class="form-control" id="target" placeholder="shareAddress" />
+			  <button class="btn btn-primary" data-clipboard-action="copy" data-clipboard-target="#target" id="copyButton" type="button">copy</button>
 			  
             </div>
           </div>
@@ -44,12 +45,13 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+	
     <script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/clipboard.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
-    <script src="js/app.js"></script>
-  
-    <!-- <script src="index.js"></script> -->
+	
+  <script src="js/share.js"></script>
   </body>
 </html>
