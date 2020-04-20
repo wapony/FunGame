@@ -189,7 +189,9 @@ App = {
 		// 	alert(error);
 		// });
 
-		App.killEveryone();
+		// App.killEveryone();
+		alert('xxxxx');
+		window.location.href='about.html';
 	},
 
 	// 获取推荐人的邀请码
