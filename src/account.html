@@ -5,86 +5,137 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>main page</title>
+    <title>账户明细</title>
 
     <!-- Bootstrap -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/account.css">
   </head>
-  <body background="bg.jpg">
+
+  <body>
     <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">引领潮流</h1>
+        <div class="row">
+          <img id="back" src="icon/back_white.png" alt="返回" onclick="window.history.back('main.html')" style="cursor: pointer">
+          <h1 class="text-center">账户明细</h1>
+          <span id="record" onclick="window.open('record.html')">投资记录</span>
           <hr/>
           <br/>
         </div>
-      </div>
 
-      <div id="petsRow" class="row">
-        <div class="col-sm-6 col-sm-push-3 col-md-4 col-md-push-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"></h3>
+        <div class="brief">
+          <div class="brief invest">
+            <div class="level_header">
+              <img id="ether_icon" src="icon/ether_yellow.jpg" alt="">
+              <span id="user_level">V3</span>
             </div>
-            <div class="panel-body">
-			  <h5>合约基数</h5>
-              <input type="text"  id="id1"  readonly =“readonly” />
-			  <h5>节点基数</h5>
-              <input type="text"  id="id2"  readonly =“readonly” />
-			  <h5>累计投币</h5>
-              <input type="text"  id="id3"  readonly =“readonly” />
-			  <h5>杠杆资产</h5>
-              <input type="text"  id="id14"  readonly =“readonly” />          
-            </div>
-			
-			<div class="panel-body">
-			  <h5>合约收益</h5>
-              <input type="text"  id="id5"  readonly =“readonly” />
-			  <h5>节点收益</h5>
-              <input type="text"  id="id6"  readonly =“readonly” />
-			  <h5>综合收益</h5>
-              <input type="text"  id="id7"  readonly =“readonly” />
-			  <h5>社区人数</h5>
-              <input type="text"  id="id8"  readonly =“readonly” />  
-			  <h5>精英奖</h5>
-              <input type="text"  id="id9"  readonly =“readonly” />  
-			  <h5>幸运奖</h5>
-              <input type="text"  id="id10"  readonly =“readonly” />  
-						  
-            </div>
-			<div class="panel-body">
-			  <h5>消耗</h5>
-              <input type="text"  id="id11"  readonly =“readonly” />
-			  <h5>节点排名基数</h5>
-              <input type="text"  id="id12"  readonly =“readonly” />
-            </div>
-			<div class="panel-body">
-			<h5>可提数量</h5>
-			<input type="text"  id="id13"  />  
-			<input type="password"  id="pwdId" placeholder="密码"  />  
-			  <button class="btn btn-primary" id="getethButton" type="button">提出</button>      
-            </div>
+
+            <table width=100%>
+              <tr>
+                <th>合约基数</th>
+                <th>节点基数</th>
+              </tr>
+
+              <tr>
+                <td id="heYueJiShu">0.1320</td>
+                <td id="jieDianJiShu">0.3491</td>
+              </tr>
+
+              <tr>
+                <th>累计投币</th>
+                <th>杠杆资产</th>
+              </tr>
+
+              <tr>
+                <td id="leiJiTouBi"">12</td>
+                <td id="gangGanZiChan">36</td>
+              </tr>
+
+
+            </table>
+
           </div>
+
+          <br>
+
+          <div class="brief benefit">
+            <table width=100%>
+              <tr>
+                <td class="benefit_td">
+                  <span class="benefit_intro">合约收益:</span>
+                  <span class="benefit_detail" id="heYueShouYi">15.3100</span>
+                </td>
+                <td class="benefit_td">
+                  <span class="benefit_intro">节点收益:</span>
+                  <span class="benefit_detail" id="jieDianShouYi">15.3100</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="benefit_td">
+                  <span class="benefit_intro">综合收益:</span>
+                  <span class="benefit_detail" id="zongHeShouYi">15.3100</span>
+                </td>
+                <td class="benefit_td">
+                  <span class="benefit_intro">社区人数:</span>
+                  <span class="benefit_detail" id="sheQuRenShu">0</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="benefit_td">
+                  <span class="benefit_intro">精英奖:</span>
+                  <span class="benefit_detail" id="jingYingJiang">0.000</span>
+                </td>
+                <td class="benefit_td">
+                  <span class="benefit_intro">幸运奖:</span>
+                  <span class="benefit_detail" id="xingYunJiang">0.000</span>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+
+          <br>
+
+          <div class="brief ewInfo">
+            <table width=100%>
+              <tr>
+                <td class="ewInfo_td">
+                  <span class="benefit_intro">EW消耗:</span>
+                  <span class="benefit_detail" id="ewXiaoHao">2000.000</span>
+                </td>
+                <td class="ewInfo_td">
+                  <span class="benefit_intro">排名节点:</span>
+                  <span class="benefit_detail" id="paiMingJishu">13.0000</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
         </div>
-      </div>
-    </div>
-	<div id="petsRow1" >
-        <h5>简介</h5>
-		<h5>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</h5>
+
+        <br>
+
+        <div class="cashInfo">
+          <span class="ethTag">可提ETH:</span>
+          <span class="ethAccount" id="withdrawEth">14.7500</span>
+        </div>
+
+        <br>
+
+        <div class="buttonArea">
+          <button id="withdrawButton" type="button">提币</button>
+        </div>
+        
+
     </div>
 
-    <script src="../../js/jquery-3.4.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/web3.min.js"></script>
-    <script src="../../js/truffle-contract.js"></script>
-    <script src="../../app.js"></script>
+
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
     <script src="account.js"></script>
     
   </body>

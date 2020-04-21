@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记录</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/record.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <img id="back" src="icon/back_white.png" alt="返回" onclick="window.history.back('account.html')" style="cursor: pointer">
+            <h1 class="text-center">投资记录</h1>
+            <hr/>
+            <br/>
+        </div>
+
+        <div class="content">
+            <table id="record_table" width=100%>
+                <tr>
+                    <th>序号</th>
+                    <th>时间</th>
+                    <th>金额</th>
+                    <th>收益</th>
+                    <th>倍数</th>
+                </tr>
+            </table>
+
+        </div>
+
+
+    </div>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="record.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+body {
+    background-image: linear-gradient(to right, rgb(15,33,38), rgb(28, 60, 65)); 
+    background-color: rgb(28, 60, 65);
+}
+
+h1 {
+    color: white;
+    font-size: x-large;
+    text-align: center;
+}
+
+#back {
+    width: 41px;
+    height: 41px;
+    margin-top: 15px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+th {
+    color: white;
+    text-align: center;
+}
