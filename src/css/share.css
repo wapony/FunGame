@@ -58,3 +58,13 @@ p {
     height: 35px;
     padding-left: 10px;
 }
+
+#copyButton {
+    color: white;
+    background-color: rgb(31, 165, 162);
+    border-radius: 5px;
+    border-width: 0px;
+    width: 110px;
+    height: 35px;
+    text-align: center;
+}
