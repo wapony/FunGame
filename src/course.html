@@ -5,41 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>TutorialToken - Wallet</title>
+    <title>钱包教程</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/course.css">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">TutorialToken</h1>
+          <img id="back" src="icon/back_white.png" alt="返回" onclick="window.history.back('account.html')" style="cursor: pointer">
+          <h3 class="text-center">钱包教程</h3>
           <hr/>
           <br/>
         </div>
       </div>
 
-      <div id="petsRow" class="row">
-        <div class="col-sm-6 col-sm-push-3 col-md-4 col-md-push-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">钱包教程</h3>
-			  <h3 class="panel-title">一、Trust钱包</h3>
-			  <h5 >Trust钱包</h3>
-			  <h3 class="panel-title">二、imToken钱包</h3>
-			  
-            </div>
-          </div>
-        </div>
+      <div class="segment">
+        <button class="selected" id="imToken" style="white-space: pre-line; margin-right: 40px;" onclick="segmentButtonClick(this)">imToken
+          教程</button>
+        <button class="unselected" id="trustToken" style="white-space: pre-line;" onclick="segmentButtonClick(this)">trust
+          教程</button>
       </div>
+
+      <br>
+
+      <div class="content_imToken">
+        <h5>imToken钱包简介</h5>
+        <p>imToken一款移动应用轻钱包APP，私钥用户自持且轻便易用安全的区块链钱包。</p>
+        <p>imToken支持BTC、ETH、EOS等多链资产类型，它旨在为普通用户提供一款安全放心、简单好用、功能强大的数字资产钱包应用，
+          且imToken2.0版本是全球为数不多的支持DAPP应用的区块链知名钱包，让智能合约触手可及。</p>
+
+        <h5>下载imToken2.0钱包:</h5>
+          <h5 style="text-indent: 2em;">一、Andorid手机下载</h5>
+          <p>1、用浏览器打开"https://token.im"imToken官网</p>
+          <p>2、点击界面"下载Android APK"即可安装imToken钱包</p>
+        
+          <h5 style="text-indent: 2em;">二、iOS手机下载</h5>
+          <p>苹果手机需要登录大陆以外的境外ID，大陆用户推荐使用香港ID下载。</p>
+          <p>1、在苹果手机里打开设置，找到"iTunes Store与App Store"，点击Apple ID切换苹果手机境外ID账号;</p>
+          <p>2、切换苹果手机境外ID账号成功后，在苹果商店:App Store搜索输入"imToken2.0"获取安装。</p>
+        
+        <h5>如何创建imToken钱包:</h5>
+          <p>1、打开imToken钱包，点击创建钱包，填写(钱包名称、密码等信息);</p>
+          <p>2、备份好助记词，创建钱包成功。</p>
+          <p class="tip">提示:创建钱包时备份好助记词，最好用纸抄写后放在不被人盗取的地方，当钱包丢失时，助记词是唯一可以找回资产的途径。</p>
+          <p>3、点击界面钱包，点击ETH，想做滑动“收款”，向右滑动“转账”(转账即允许把imToken钱包的ETH划转到交易所或者转到其他的钱包地址，收款
+            即可接受交易所及其他钱包的ETH划转到该imToken钱包里)</p>
+          <p class="tip">点击界面下方“浏览”，在最上面搜索输入EW DAPP项目邀请人的链接打开进入进行投币即可。</p>
+
+      </div>
+
+      <div class="content_trust">
+        <h5>Trust钱包简介:</h5>
+          <p>Trust是一款集安全、开源、匿名于一体的移动区块链钱包应用，可以存储超过20,000种不同的基于ERC20的代币及BTC等，
+            它能更好的帮助用户方便的管理自己的数字资产</p>
+          <p>Trust于2017年推出DAPPS浏览器，是最早开放DAPP应用的一款区块链轻钱包。</p>
+          <p>2017年全球交易量最大加密货币交易所币安Binance完成了对以太坊移动钱包Trust Wallet的收购。</p>
+
+        <h5>下载Trust钱包:</h5>
+          <h5 style="text-indent: 2em;">一、Android安卓手机下载</h5>
+          <p>1、在手机浏览器打开Trust钱包官网:
+            https://trustwalletapp.com 选择Android版本下载安装好，并按提示创建钱包。</p>
+          <p>2、下载“百度手机助手”在百度手机助手输入“Trust”搜索下载。</p>
+
+          <h5 style="text-indent: 2em;">二、iOS苹果下载</h5>
+          <p>苹果手机需要登录大陆以外的境外ID，大陆用户推荐使用香港ID下载。</p>
+          <p>1、在苹果手机里打开设置，找到"iTunes Store与App Store"，点击Apple ID切换苹果手机境外ID账号;</p>
+          <p>2、切换苹果手机境外ID账号成功后，在苹果商店:App Store搜索输入"Trust"获取安装。</p>
+        
+        <h5>如何创建Trust钱包:</h5>
+          <p>1、打开Trust钱包，点击创建钱包，备份好助记词，创建钱包成功</p>
+          <p class="tip">提示:创建钱包时备份好助记词，最好用纸抄写后放在不被人盗取的地方，当钱包丢失时，助记词是唯一可以找回资产的途径。</p>
+          <p>2、点击界面Ethereum---点击ETH弹出的子页面显示“发送”和“接收”（发送指把Trust钱包的ETH划转到交易所或者是转移到其他的钱包地址，
+            接收即可接收交易所极其其他钱包的ETH划转到该Trust钱包里）。</p>
+          <p class="tip">点击界面下方“浏览”，在最上面搜索输入EW DAPP项目邀请人的链接打开进入进行投币即可。</p>
+        
+      </div>
+
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -48,8 +93,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/course.js"></script>
   
-    <!-- <script src="index.js"></script> -->
   </body>
 </html>

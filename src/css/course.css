@@ -1,0 +1,53 @@
+body {
+    background-image: linear-gradient(to right, rgb(15,33,38), rgb(28, 60, 65)); 
+    background-color: rgb(28, 60, 65);
+}
+
+h3 {
+    color: white;
+}
+
+#back {
+    width: 41px;
+    height: 41px;
+    margin-top: 15px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+.selected {
+    color: white;
+    background-color: rgb(75, 165, 162);
+    border-radius: 10px;
+    border-width: 0px;
+    width: 25%;
+    height: 50px;
+    font-size: medium;
+}
+
+.unselected {
+    color: rgb(75, 165, 162);
+    background-color: white;
+    border-radius: 10px;
+    border-width: 0px;
+    width: 25%;
+    height: 50px;
+    font-size: medium;
+}
+
+h4,h5 { 
+    color: rgb(100, 217, 213);
+}
+
+p {
+    color: white;
+    text-indent: 2em;
+}
+
+.tip {
+    color: rgb(100, 217, 213);
+}
+
+.content_trust {
+    display: none;
+}
