@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购买门票</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/buyTicket.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+			<img id="back" src="icon/back.jpg" alt="返回" onclick="window.history.back('main.html')" style="cursor: pointer">
+			<h3 class="text-center">购买门票</h3>
+			<hr/>
+			<br/>
+        </div>
+        
+        <div class="row">
+            <table width=100%>
+                <tr>
+                    <th>全球购买总量(EW)</th>
+                    <th>全球消耗总量(EW)</th>
+                </tr>
+                <tr>
+                    <td id="buyAmount">4000.00</td>
+                    <td id="burnAmount">3000.00</td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="fname">购买数量</label>
+            </div>
+            <div class="col-75">
+                <input type="text" name="buyAmount" id="fname" value="1">
+            </div>
+            <span class="unit">ETH</span>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="ticket"">可得门票</label>
+            </div>
+            <div class="col-75">
+                <input type="text" name="ticketAmount" id="ticket" value="2000">
+            </div>
+            <span class="unit">EW</span>
+        </div>
+
+        <div class="row">
+            <div style="color:rgb(149, 151, 151); text-align: center; ">当前价格：1ETH = 2000EW </div>
+        </div>
+
+        <br>
+
+        <div class="row" style="text-align: center;">
+            <input type="submit" value="确认购买" onclick="confirmBuy()">
+        </div>
+
+    </div>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/buyTicket.js"></script>
+</body>
+</html>

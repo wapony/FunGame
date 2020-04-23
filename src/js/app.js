@@ -80,32 +80,34 @@ App = {
 
   //点击事件--购买门票
   handleBuyTicket: function (event) {
-    event.preventDefault();
+    // event.preventDefault();
     
-    var ethnum = parseInt($('#ethnumberId').val());
-    console.log('Transfer ' + ethnum );
+    // var ethnum = parseInt($('#ethnumberId').val());
+    // console.log('Transfer ' + ethnum );
 
-    var ethFutureInstance;
+    // var ethFutureInstance;
 
-    web3.eth.getAccounts(function (error, accounts) {
-      if (error) {
-        console.log(error);
-      }
+    // web3.eth.getAccounts(function (error, accounts) {
+    //   if (error) {
+    //     console.log(error);
+    //   }
 
-      var account = accounts[0];
-      var ethValue = web3.toWei(1, "ether");
+    //   var account = accounts[0];
+    //   var ethValue = web3.toWei(1, "ether");
       
-      App.contracts.EthFuture.deployed().then(function(instance) {
-        ethFutureInstance = instance;
+    //   App.contracts.EthFuture.deployed().then(function(instance) {
+    //     ethFutureInstance = instance;
 
-        return ethFutureInstance.buyTToken({from: account, value: ethValue});
-      }).then(function(result) {
-        console.log("buyTToken result = " + result);
-      }).catch(function(error) {
-        console.error(error);
-      });
+    //     return ethFutureInstance.buyTToken({from: account, value: ethValue});
+    //   }).then(function(result) {
+    //     console.log("buyTToken result = " + result);
+    //   }).catch(function(error) {
+    //     console.error(error);
+    //   });
 
-    });
+    // });
+
+    window.location.href = "buyTicket.html";
     
   },
 

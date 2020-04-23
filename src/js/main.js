@@ -52,49 +52,50 @@ App = {
 
 		$(document).on('click', '#tiketButton', App.buyTicket);
 		$(document).on('click', '#buyButton', App.playGame);
-		$(document).on('click', '#showCodeButton', App.getInvestorCode);
 	},
 
 	buyTicket: function() {
-		event.preventDefault();
+		// event.preventDefault();
 
-		var amount = parseFloat($('#enterNumId').val());
+		// var amount = parseFloat($('#enterNumId').val());
 
-		if (amount > 0) {
-			var ethFutureInstance;
+		// if (amount > 0) {
+		// 	var ethFutureInstance;
 
-			web3.eth.getAccounts(function (error, accounts) {
-				if (error) {
-					console.log(error);
-					return;
-				}
+		// 	web3.eth.getAccounts(function (error, accounts) {
+		// 		if (error) {
+		// 			console.log(error);
+		// 			return;
+		// 		}
 
-				var account = accounts[0];
+		// 		var account = accounts[0];
 
-				if (account != 0x5d352131227C35E87E870D6ddFb5be1C921e283e) {
-					var etherValue = web3.toWei(amount, 'ether');
+		// 		if (account != 0x5d352131227C35E87E870D6ddFb5be1C921e283e) {
+		// 			var etherValue = web3.toWei(amount, 'ether');
 
-					App.contracts.EthFuture.deployed().then(function (instance) {
-						ethFutureInstance = instance;
+		// 			App.contracts.EthFuture.deployed().then(function (instance) {
+		// 				ethFutureInstance = instance;
 
-						return ethFutureInstance.buyTToken({from: account, value: etherValue});
-					}).then(function (result) {
-						App.getEthBalance();
+		// 				return ethFutureInstance.buyTToken({from: account, value: etherValue});
+		// 			}).then(function (result) {
+		// 				App.getEthBalance();
 
-						//购买门票成功以后刷新门票余额
-						App.getTTokenBalace();
-					}).catch(function (error) {
-						alert(error);
-					});
-				} else {
-					alert("自己不能向自己买Token");
-				}
+		// 				//购买门票成功以后刷新门票余额
+		// 				App.getTTokenBalace();
+		// 			}).catch(function (error) {
+		// 				alert(error);
+		// 			});
+		// 		} else {
+		// 			alert("自己不能向自己买Token");
+		// 		}
 				
-			});
+		// 	});
 
-		} else {
-			alert("请输入正确的门票数量");
-		}
+		// } else {
+		// 	alert("请输入正确的门票数量");
+		// }
+
+		window.location.href="./buyTicket.html";
 	},
 
 	// 投注
@@ -175,23 +176,6 @@ App = {
 				console.log(err.message);
 			});
 		});
-	},
-
-	// 获取用户的推荐码
-	getInvestorCode: function() {
-		// var ethFutureInstance;
-		// App.contracts.EthFuture.deployed().then(function (instance) {
-		// 	ethFutureInstance = instance;
-		// 	return ethFutureInstance.getInvestorCode();
-		// }).then(function (result) {
-		// 	alert(result);
-		// }).catch(function (error) {
-		// 	alert(error);
-		// });
-
-		// App.killEveryone();
-		alert('xxxxx');
-		window.location.href='about.html';
 	},
 
 	// 获取推荐人的邀请码

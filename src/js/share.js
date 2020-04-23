@@ -1,7 +1,9 @@
 $(function(){ 
 	//封装查询数据todo
     $("#target").val("www.baidu.com");
-    copy()
+    copy();
+
+    showShareInfo();
 }); 
 
 function segmentButtonClick(obj) {
@@ -41,5 +43,17 @@ function copy() {
         $('#show').slideDown().delay(1500).slideUp(300);
         console.log(e);
     });
-
 }   
+
+function showShareInfo() {
+    var tab = document.getElementById('table_shareInfo');
+    var tradd = tab.insertRow(1);
+    tradd.innerHTML='<td>1</td><td>sdng06</td><td>11.000</td>'; 
+    
+    tradd = tab.insertRow(2);
+    tradd.innerHTML = '<td>2</td><td>sdng07</td><td>12.000</td>';
+
+    tradd = tab.insertRow(3);
+    tradd.innerHTML = '<td>3</td><td>sdng08</td><td>13.000</td>';
+
+}

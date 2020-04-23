@@ -1,0 +1,72 @@
+body {
+    background-image: linear-gradient(to right, rgb(15,33,38), rgb(28, 60, 65)); 
+    background-color: rgb(28, 60, 65);
+}
+
+#back {
+    width: 41px;
+    height: 41px;
+    margin-top: 15px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+h3 {
+    color: white;
+}
+
+table,th,td {
+    text-align: center;
+    color: white;
+}
+
+td {
+    color: rgb(110, 236, 252);
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+  }
+  
+.col-75 {
+    float: left;
+    width: 55%;
+    margin-top: 6px;
+  }
+
+label {
+    padding: 8px 12px 12px 0;
+    display: inline-block;
+    color: white;
+    margin-left: 35px;
+    width: 100%;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    height: 35px;
+    margin-left: 10px;
+    text-align: center;
+  }
+
+input[type=submit] {
+    width: 70%;
+    background-color: rgb(74, 165, 162);
+    border-width: 0px;
+    border-radius: 5px;
+    color: white;
+    height: 40px;
+}
+
+.unit {
+    position: absolute;
+    color: rgb(182, 182, 182);
+    margin-top: 14px;
+    margin-left: -25px;
+}

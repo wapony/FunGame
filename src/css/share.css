@@ -88,11 +88,17 @@ tr {
     justify-content: space-around;
 }
 
-table,th,td {
+table,th {
     color:  white;
     text-align: center;
     font-size: large;
     font-weight: 300;
+}
+
+td {
+    color: rgb(31, 165, 162);
+    font-size: medium;
+    margin-top: 10px;
 }
 
 .community_table tr {
