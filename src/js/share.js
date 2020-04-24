@@ -2,7 +2,6 @@ $(function(){
 	//封装查询数据todo
     $("#target").val("www.baidu.com");
     copy();
-
     showShareInfo();
 }); 
 

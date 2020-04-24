@@ -279,8 +279,30 @@ contract EthFutureControl is EthFutureTree {
         return true;
     }
 
-    //  合约销毁
+    // 合约销毁
     function destroyContract() external onlyOwner {
         selfdestruct(msg.sender);
+    }
+
+    /**
+     * uint: 静态每日释放量
+     * uint: 动态每日释放量
+     * uint: 该账户的投资总额
+     * uint: 杠杆资产
+     */
+    function accountInfo() public view returns(uint, uint, uint, uint) {
+        Node storage node = nodes[ownerToIndex[msg.sender]];
+        uint staticPerDayBenefit = _getStaticBenefitPerDayOfNode(node);
+        uint dynamicPerDayBenefit = _getDynamicBenefitPerDayOfOwner(node);
+        uint totalAmount;
+        for (var i=0; i<node.investInfos.length; i++) {
+            InvestInfo storage temp = investInfos[i];
+            totalAmount = totalAmount.add(temp.investAmount);
+        }
+
+        // 杠杆资产
+        uint leverage = totalAmount * 3;
+
+        return (staticPerDayBenefit, dynamicPerDayBenefit, totalAmount, leverage);
     }
 }

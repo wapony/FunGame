@@ -17,7 +17,7 @@
         <div class="row">
           <img id="back" src="icon/back_white.png" alt="返回" onclick="window.history.back('main.html')" style="cursor: pointer">
           <h1 class="text-center">账户明细</h1>
-          <span id="record" onclick="window.open('record.html')">投资记录</span>
+          <span id="record" onclick='window.location.href="record.html"'>投资记录</span>
           <hr/>
           <br/>
         </div>
@@ -136,7 +136,9 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
-    <script src="account.js"></script>
+    
+    <script src="js/app.js"></script>
+    <script src="js/account.js"></script>
     
   </body>
 </html>

@@ -1,4 +1,4 @@
-App = {
+const App = {
   web3Provider: null,
   contracts: {},
 
