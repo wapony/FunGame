@@ -17,6 +17,9 @@ contract EthFutureControl is EthFutureTree {
     // 个人收益
     mapping (address => uint) public ownerBenefit;
 
+    // 用户已经提币的数量
+    mapping (address => uint) historyBenefit;
+
     // 限制释放比例在一个区间，防止输错, 1 ~ 20
     modifier rateRestrict(uint rate) {
         require(rate >= 1 && rate <= 20);
@@ -146,7 +149,7 @@ contract EthFutureControl is EthFutureTree {
     }
 
     // 获取当前用户每日的动态收益
-    function _getDynamicBenefitPerDayOfOwner(Node storage node) private view returns(uint) {
+    function _getDynamicBenefitPerDayOfNode(Node storage node) private view returns(uint) {
         if (node.sonNodes.length == 0) {
             return 0;
         }
@@ -238,17 +241,68 @@ contract EthFutureControl is EthFutureTree {
         return(sonNodes, totalSonBenefit);
     }
 
-    // 获取当前用户每日的收益，包括静态收益和动态收益
-    function getBenefitPerDay() public view returns(uint) {
-        require(ownerIsRegisted[msg.sender]);
+    // // 获取当前用户每日的收益，包括静态收益和动态收益
+    // function getBenefitPerDay() public view returns(uint) {
+    //     require(ownerIsRegisted[msg.sender]);
 
+    //     Node storage node = nodes[ownerToIndex[msg.sender]];
+    //     uint staticBenefit = _getStaticBenefitPerDayOfNode(node);
+    //     uint dynamicBenefit = _getDynamicBenefitPerDayOfNode(node);
+
+    //     return staticBenefit + dynamicBenefit;
+    // }
+
+    // 获取用户从投资开始到当前时间 用户的总收益（静态，动态），也就是总共的收益（包括用户已经提走的）
+    function getTotalBenefit() public view returns(uint, uint) {
         Node storage node = nodes[ownerToIndex[msg.sender]];
-        uint staticBenefit = _getStaticBenefitPerDayOfNode(node);
-        uint dynamicBenefit = _getDynamicBenefitPerDayOfOwner(node);
+        InvestInfo storage firstInvest = node.investInfos[0];
 
-        return staticBenefit + dynamicBenefit;
+        // 从第一次投资开始计算天数
+        uint8 timeDay = (uint8)((now - firstInvest.investTime) / 86400);
+        
+        uint totalStaticBenefit;
+        uint totalDynamicBenefit;
+        for (uint8 i=0; i<timeDay; i++) {
+            totalStaticBenefit = totalStaticBenefit.add(_getStaticBenefitPerDayOfNode(node));
+            totalDynamicBenefit = totalDynamicBenefit.add(_getDynamicBenefitPerDayOfNode(node));
+        }
+
+        return (totalStaticBenefit, totalDynamicBenefit);
     }
-    
+
+    // 获取截止当前时间可以提现的以太
+    function getAbleCash() public returns(uint) {
+        uint staticBenefit;
+        uint dynamicBenefit;
+        (staticBenefit, dynamicBenefit) = getTotalBenefit();
+
+        ownerBenefit[msg.sender] = (staticBenefit.add(dynamicBenefit)).sub(historyBenefit[msg.sender]);
+
+        return ownerBenefit[msg.sender];
+    }
+
+    /**
+     * uint: 静态每日释放量
+     * uint: 动态每日释放量
+     * uint: 该账户的投资总额
+     * uint: 杠杆资产
+     */
+    // function accountInfo() public view returns(uint, uint, uint, uint) {
+    //     Node storage node = nodes[ownerToIndex[msg.sender]];
+    //     uint staticPerDayBenefit = _getStaticBenefitPerDayOfNode(node);
+    //     uint dynamicPerDayBenefit = _getDynamicBenefitPerDayOfNode(node);
+    //     uint totalAmount;
+    //     for (var i=0; i<node.investInfos.length; i++) {
+    //         InvestInfo storage temp = investInfos[i];
+    //         totalAmount = totalAmount.add(temp.investAmount);
+    //     }
+
+    //     // 杠杆资产
+    //     uint leverage = totalAmount * 3;
+
+    //     return (staticPerDayBenefit, dynamicPerDayBenefit, totalAmount, leverage);
+    // }
+
     // 获取当前用户的邀请码
     function getInvestorCode() public view returns(string memory) {
         if (ownerIsRegisted[msg.sender] == false) {
@@ -256,13 +310,6 @@ contract EthFutureControl is EthFutureTree {
         } else {
             return _createInviteCode();
         }
-    }
-
-    // ？获取当前用户下所有子节点的个数，
-    function getSonNodesCount() public view returns(uint) {
-        Node storage node = nodes[ownerToIndex[msg.sender]];
-
-        return node.sonNodes.length;
     }
 
     // 获取当前合约账户的余额
@@ -274,6 +321,10 @@ contract EthFutureControl is EthFutureTree {
     function withdraw() public returns(bool) {
         uint amount = ownerBenefit[msg.sender];
         ownerBenefit[msg.sender] = 0;
+
+        // 把每次可提的币累加 记录提币的总量
+        historyBenefit[msg.sender] = historyBenefit[msg.sender].add(amount);
+
         msg.sender.transfer(amount);
 
         return true;
@@ -282,27 +333,5 @@ contract EthFutureControl is EthFutureTree {
     // 合约销毁
     function destroyContract() external onlyOwner {
         selfdestruct(msg.sender);
-    }
-
-    /**
-     * uint: 静态每日释放量
-     * uint: 动态每日释放量
-     * uint: 该账户的投资总额
-     * uint: 杠杆资产
-     */
-    function accountInfo() public view returns(uint, uint, uint, uint) {
-        Node storage node = nodes[ownerToIndex[msg.sender]];
-        uint staticPerDayBenefit = _getStaticBenefitPerDayOfNode(node);
-        uint dynamicPerDayBenefit = _getDynamicBenefitPerDayOfOwner(node);
-        uint totalAmount;
-        for (var i=0; i<node.investInfos.length; i++) {
-            InvestInfo storage temp = investInfos[i];
-            totalAmount = totalAmount.add(temp.investAmount);
-        }
-
-        // 杠杆资产
-        uint leverage = totalAmount * 3;
-
-        return (staticPerDayBenefit, dynamicPerDayBenefit, totalAmount, leverage);
     }
 }
