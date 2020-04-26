@@ -44,7 +44,7 @@ App = {
 	},
 
 	bindEvents: function() {
-		$(".numclass").each(function(){
+		$(".div-inline1").each(function(){
 			$(this).click(function(){
 				$('#enterNumId').val($(this).attr('value'));
 			});
@@ -226,8 +226,11 @@ App = {
 
 
 $(function(){  
-	$(window).on("load", function () {
-		App.init();
-	});
+	//
+	//$(".div-inline1").each(function(){
+			//$(this).click(function(){
+				//$('#enterNumId').val($(this).attr('value'));
+			//});
+		//});
 }); 
 
