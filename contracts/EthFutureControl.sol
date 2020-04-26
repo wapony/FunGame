@@ -14,6 +14,9 @@ contract EthFutureControl is EthFutureTree {
     uint8 public elevenToTwentyRate; // 11-20代
     uint8 public moreRate;           // 20代以后
 
+    uint public soldAmount;        // 出售门票的总量
+    uint public destroyedAmount;      // 销毁门票的总量
+
     // 个人收益
     mapping (address => uint) public ownerBenefit;
 
@@ -67,6 +70,9 @@ contract EthFutureControl is EthFutureTree {
         // 转移对应的token到购买者的账户
         _transfer(contractOwner, msg.sender, amount);
 
+        // 累计每次购买门票的量
+        soldAmount = soldAmount.add(amount);
+
         return true;
     }
 
@@ -112,6 +118,9 @@ contract EthFutureControl is EthFutureTree {
         
         // 扣除账户的门票
         _transfer(msg.sender, contractOwner, needTtoken);
+
+        // 累计销毁门票的数量
+        destroyedAmount = destroyedAmount.add(needTtoken);
 
         return true;
     }
@@ -312,6 +321,14 @@ contract EthFutureControl is EthFutureTree {
         }
     }
 
+    // 获取目前累计出售门票的数量和销毁门票的数量
+    function getSoldAndDestoryedTicketAmount() public pure returns(uint, uint) {
+        
+
+        return (1, 2);
+        // return (soldAmount, destroyedAmount);
+    }
+
     // 获取当前合约账户的余额
     function getContractBalanceOfEth() public view returns(uint) {
         return address(this).balance;
@@ -322,7 +339,7 @@ contract EthFutureControl is EthFutureTree {
         uint amount = ownerBenefit[msg.sender];
         ownerBenefit[msg.sender] = 0;
 
-        // 把每次可提的币累加 记录提币的总量
+        // 把每次可提的币累加 记录已提币的总量
         historyBenefit[msg.sender] = historyBenefit[msg.sender].add(amount);
 
         msg.sender.transfer(amount);
