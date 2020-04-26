@@ -70,11 +70,21 @@
 			text-align: left;
 			line-height: 2.8rem;
 		}
+		
 		.div-inline2 {
 			float: right;
 			margin-top: 1.5rem;
 			width: 15rem;
 		}
+		
+		.delquery{
+			display: block;
+			height: 3.2rem;
+			width: 3.2rem;
+			background: url(./icon/delete.png) right no-repeat;
+			line-height: 2.8rem;
+		}
+		
 		.circlewrap {
 			position: relative;
 			display: inline-block;
@@ -239,15 +249,15 @@ width:2.2rem*/
 
 		<div id="petsRow" class="row">
 			<div class="row_padding col-sm-6 col-sm-push-3 col-md-4 col-md-push-4">
-				<div class="panel panel-default" style="border-radius: 0;background: none;">
+				<div class="panel panel-default" style="border:none;border-radius: 0;background: none;">
 					<div style="height:82rem;background: rgba(21, 56, 56, 0);" class="panel-body">
 					<div style="text-align:center;">
 						<h3 style="color:#40E0D0;">Ether world</h3>
 					</div>
 						<div class="ellipse1">
 							<div style="overflow: hidden; padding: 0 3rem;">
-								<span id="etherBalanceId" style="color:white; font-size:2rem; float: left;">12.00</span>
-								<span style="color:white;font-size:20px; float: right;">0.00</span>
+								<span id="etherBalanceId" style="color:white; font-size:2rem; float: left;">00.00</span>
+								<span style="color:white;font-size:20px; float: right;">00.00</span>
 							</div>
 							<div style="overflow: hidden; padding: 0 30px;">
 								<span style="color:white; font-size:20px; float: left;">累计投币</span>
@@ -280,43 +290,46 @@ width:2.2rem*/
 						</div>
 
 						<div style="overflow: hidden;">
-							<div class="div-inline1">
-								<a href="" class="bgbtn btn">
-									<span style ="color:white;"> +1</span>
+							<div class="div-inline1"value="1" >
+								<a  class="bgbtn btn">
+									<span  id ="enum1" value="1" style ="color:white;"> +1</span>
 								</a>
 							</div>
-							<div class="div-inline1">
-								<a href="" class="bgbtn btn">
-									<span style ="color:white;"> +3</span>
+							<div class="div-inline1" value="3" >
+								<a  class="bgbtn btn">
+									<span id ="enum2" value="3" style ="color:white;"> +3</span>
 								</a>
 							</div>
-							<div class="div-inline1">
-								<a href="" class="bgbtn btn">
-									<span style ="color:white;">+5</span>
+							<div class="div-inline1" value="5">
+								<a  class="bgbtn btn">
+									<span id ="enum3" value="5" style ="color:white;">+5</span>
 								</a>
 							</div>
 	
-							<div class="div-inline1">
-								<a href="" class="bgbtn btn">
-									<span style ="color:white;">+10</span>
+							<div class="div-inline1" value="10">
+								<a  class="bgbtn btn">
+									<span id ="enum4" value="10" style ="color:white;">+10</span>
 								</a>
 							</div>
-							<div class="div-inline1">
-								<a href="" class="bgbtn btn">
-									<span style ="color:white;">+20</span>
+							<div class="div-inline1" value="20">
+								<a  class="bgbtn btn">
+									<span id ="enum5" value="20" style ="color:white;">+20</span>
 								</a>
 							</div>
-							<div class="div-inline1">
-								<a href="" class="bgbtn btn">
-									<span style ="color:white;">+30</span>
+							<div class="div-inline1" value="30" >
+								<a  class="bgbtn btn">
+									<span id ="enum6"  style ="color:white;">+30</span>
 								</a>
 							</div>
 						</div>
 
 						
-						<div style="margin-top:20px;text-align:center">
-							<input type="text" id="enterNumId" style="height:3.2rem;border-radius:5px;border:none;background:#20B2AA;" placeholder="输入数字" /><br>
+						<div style="margin-top:20px;text-align:center;">
+							<input type="text" id="enterNumId" style="color:white;height:3.2rem;border-radius:5px;border:none;background:#20B2AA;text-align:center" placeholder="输入数字" />
+						<!-- <a  class="delquery"></a> -->
 						</div>
+						
+						
 
 						<div style="overflow: hidden;">
 							<div class="div-inline2">
@@ -375,21 +388,7 @@ width:2.2rem*/
 	<script src="js/main.js"></script>
 
 	<script>
-// 		getRem(720,10)
-// 	window.onload = function(){
-//     /*720代表设计师给的设计稿的宽度，你的设计稿是多少，就写多少;100代表换算比例，这里写100是
-//       为了以后好算,比如，你测量的一个宽度是100px,就可以写为1rem,以及1px=0.01rem等等*/
-//     getRem(720,10)
-// };
-// window.onresize = function(){
-//     getRem(720,10)
-// };
-// function getRem(pwidth,prem){
-//     var html = document.getElementsByTagName("html")[0];
-//     var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
-//     html.style.fontSize = oWidth/pwidth*prem + "px";
-// }
-	
+
 		/*画圆弧统计图*/
 		/*调用方式，多种颜色 $(select).drawCircle(true);*/
 		/*调用方式，单种颜色 $(select).drawCircle(false,'green');*/
