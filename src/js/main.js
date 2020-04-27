@@ -154,6 +154,29 @@ App = {
 		});
 	},
 
+	// 获取当前用户累计投币量
+	getTotalAmount: function() {
+		var ethFutureInstance;
+
+		web3.eth.getAccounts(function(error, accounts) {
+			if (error) {
+				console.log(error);
+			}
+
+			var account = accounts[0];
+
+			App.contracts.EthFuture.deployed().then(function(instance) {
+				ethFutureInstance = instance;
+
+				return ethFutureInstance.getOwnerTotalAmount({from:account});
+			}).then(function(result) {
+				console.log('累计投币：', result);
+			}).catch(function(error) {
+				console.log(error.message);
+			});
+		});
+	},
+
 	// 获取当前用户TT余额
 	getTTokenBalace: function() {
 		var ethFutureInstance;

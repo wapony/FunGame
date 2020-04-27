@@ -323,7 +323,6 @@ contract EthFutureControl is EthFutureTree {
 
     // 获取目前累计出售门票的数量和销毁门票的数量
     function getSoldAndDestoryedTicketAmount() public pure returns(uint, uint) {
-        
 
         return (1, 2);
         // return (soldAmount, destroyedAmount);
@@ -332,6 +331,18 @@ contract EthFutureControl is EthFutureTree {
     // 获取当前合约账户的余额
     function getContractBalanceOfEth() public view returns(uint) {
         return address(this).balance;
+    }
+
+    // 获取当前账户累计投币量
+    function getOwnerTotalAmount() public view returns(uint) {
+        uint result;
+
+        Node storage node = nodes[ownerToIndex[msg.sender]];
+        for (uint8 i=0; i<node.investInfos.length; i++) {
+            InvestInfo storage info = node.investInfos[i];
+            result = result.add(info.investAmount);
+        }
+        return result;
     }
 
     // 用户提现
