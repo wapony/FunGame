@@ -249,11 +249,8 @@ App = {
 
 
 $(function(){  
-	//
-	//$(".div-inline1").each(function(){
-			//$(this).click(function(){
-				//$('#enterNumId').val($(this).attr('value'));
-			//});
-		//});
+	$(window).on("load", function () {
+		App.init();
+	});
 }); 
 
