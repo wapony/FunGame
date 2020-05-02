@@ -92,6 +92,15 @@ App = {
 				App.contracts.EthFuture.deployed().then(function (instance) {
 					return instance.investGame(code, {from: account, value: etherValue});
 				}).then(function(result) {
+					var param={
+						"account":account,
+						"code":"568",
+						"pid":"1",
+						"voteinfo":"123",
+						"fcode":"666",
+						"votetimes":"222"
+					}
+
 
 					$('body').dialog({type:'success',
 									title:'操作成功',
@@ -239,6 +248,30 @@ App = {
 					}
 					
 					
+				},
+				//请求失败，包含具体的错误信息
+				error : function(e){
+					console.log(e.status);
+					console.log(e.responseText);
+				}
+			});
+	},
+
+	// 插入投资数据
+ 	vote: function(param) {
+		$.ajax({
+				//请求方式
+				type : "POST",
+				//请求的媒体类型
+	
+				//请求地址
+				url : "http://39.108.122.77/v1/user",
+				//数据，json字符串
+				data : JSON.stringify(param),
+				contentType:"application/json;charset=utf-8",
+				//请求成功
+				success : function(result) {
+					 console.log("vote===="+JSON.stringify(result));
 				},
 				//请求失败，包含具体的错误信息
 				error : function(e){
