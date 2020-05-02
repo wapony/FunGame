@@ -108,7 +108,8 @@ contract EthFutureControl is EthFutureTree {
         // 调用者的TToken余额为
         uint ttokenBalance = balanceOf(msg.sender);
         // 1eth = 2000Token, 门票为投注eth的 十分之一
-        uint needTtoken = msg.value.mul(2000 / 10) / (10 ** 18);
+        uint temp = msg.value;
+        uint needTtoken = temp.mul(2000 / 10) / (10 ** 18);
 
         // 要求账户ttoken的余额足够门票的支付
         require(ttokenBalance >= needTtoken);
@@ -292,7 +293,7 @@ contract EthFutureControl is EthFutureTree {
 
     // 获取当前用户的邀请码
     function getInvestorCode() public view returns(string memory) {
-        if (ownerIsRegisted[msg.sender] == false) {
+        if ((ownerIsRegisted[msg.sender] == false) && msg.sender != owner()) {
             return "该用户尚未注册无法获取邀请码";
         } else {
             return _createInviteCode();

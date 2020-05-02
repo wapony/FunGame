@@ -65,11 +65,8 @@ const Page = {
 
 						return ethFutureInstance.buyTToken({from: account, value: etherValue});
 					}).then(function (result) {
-						// Page.getEthBalance();
-
-						// //购买门票成功以后刷新门票余额
-                        // Page.getTTokenBalace();
-                        console.log(result);
+                        alert("购买成功");
+                        window.history.back('main.html');
 					}).catch(function (error) {
 						alert(error);
 					});

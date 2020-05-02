@@ -1,10 +1,3 @@
-$(function(){ 
-	//封装查询数据todo
-    $("#target").val("www.baidu.com");
-    copy();
-    showShareInfo();
-}); 
-
 function segmentButtonClick(obj) {
     $(obj).siblings().attr('class', 'unselected');
     $(obj).attr('class', 'selected');
@@ -35,12 +28,12 @@ function copy() {
 
     clipboard.on('success',function(e){
         $('#show').slideDown().delay(1500).slideUp(300);
-        console.log(e);
+        alert("复制成功");
     });
 
     clipboard.on('error',function(e){
         $('#show').slideDown().delay(1500).slideUp(300);
-        console.log(e);
+        alert("复制失败");
     });
 }   
 
@@ -56,3 +49,57 @@ function showShareInfo() {
     tradd.innerHTML = '<td>3</td><td>sdng08</td><td>13.000</td>';
 
 }
+
+const Page = {
+    web3Provider: null,
+    contracts: {},
+
+    init: function() {
+        Page.web3Provider = App.web3Provider;
+        Page.initContracts();
+    },
+
+    initContracts: function() {
+        $.getJSON('EthFutureControl.json', function(data) {
+            var ethFutureAirtifact = data;
+			Page.contracts.EthFuture = TruffleContract(ethFutureAirtifact);
+            Page.contracts.EthFuture.setProvider(Page.web3Provider); 
+
+            Page.getInvestorCode();
+        });
+    },
+
+    getInvestorCode: function() {
+        web3.eth.getAccounts(function(error, accounts) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+
+            var account = accounts[0];
+
+            Page.contracts.EthFuture.deployed().then(function(instance) {
+                return instance.getInvestorCode({from: account});
+            }).then(function(result) {
+                if (result == "该用户尚未注册无法获取邀请码") {
+                    alert("该用户尚未注册无法获取邀请码");
+                } else {
+                    $("#myInviteUrl").val("http://localhost:3000/?code=" + result);
+                }
+                
+            }).catch(function(error) {
+                alert(error);
+            });
+
+        });
+    },
+};
+
+$(function() { 
+    $(window).on("load", function () {
+		Page.init();
+    });
+
+    copy();
+    showShareInfo();
+}); 

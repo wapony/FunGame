@@ -38,9 +38,13 @@ App = {
 
 			// 获取TToken余额
 			App.getTTokenBalace();
+
+			// 累计投币
+			App.getTotalAmount();
 		});
 
 		App.bindEvents();
+		App.topTen();
 	},
 
 	bindEvents: function() {
@@ -55,46 +59,6 @@ App = {
 	},
 
 	buyTicket: function() {
-		// event.preventDefault();
-
-		// var amount = parseFloat($('#enterNumId').val());
-
-		// if (amount > 0) {
-		// 	var ethFutureInstance;
-
-		// 	web3.eth.getAccounts(function (error, accounts) {
-		// 		if (error) {
-		// 			console.log(error);
-		// 			return;
-		// 		}
-
-		// 		var account = accounts[0];
-
-		// 		if (account != 0x5d352131227C35E87E870D6ddFb5be1C921e283e) {
-		// 			var etherValue = web3.toWei(amount, 'ether');
-
-		// 			App.contracts.EthFuture.deployed().then(function (instance) {
-		// 				ethFutureInstance = instance;
-
-		// 				return ethFutureInstance.buyTToken({from: account, value: etherValue});
-		// 			}).then(function (result) {
-		// 				App.getEthBalance();
-
-		// 				//购买门票成功以后刷新门票余额
-		// 				App.getTTokenBalace();
-		// 			}).catch(function (error) {
-		// 				alert(error);
-		// 			});
-		// 		} else {
-		// 			alert("自己不能向自己买Token");
-		// 		}
-				
-		// 	});
-
-		// } else {
-		// 	alert("请输入正确的门票数量");
-		// }
-
 		window.location.href="./buyTicket.html";
 	},
 
@@ -128,7 +92,16 @@ App = {
 				App.contracts.EthFuture.deployed().then(function (instance) {
 					return instance.investGame(code, {from: account, value: etherValue});
 				}).then(function(result) {
-					App.getEthBalance();
+
+					$('body').dialog({type:'success',
+									title:'操作成功',
+									buttons:[{name: '确定',className: 'defalut'}],
+									discription:'优秀'},
+									function(ret){
+						window.location.reload();
+					});
+
+
 				}).catch(function(error) {
 					alert(error);
 				});
@@ -170,7 +143,9 @@ App = {
 
 				return ethFutureInstance.getOwnerTotalAmount({from:account});
 			}).then(function(result) {
-				console.log('累计投币：', result);
+				var amount = result.c[0] / 10**4;
+				amount = amount.toFixed(2);
+				$("#etherBalanceId").html(amount);
 			}).catch(function(error) {
 				console.log(error.message);
 			});
@@ -194,7 +169,7 @@ App = {
 				return ethFutureInstance.balanceOf(account);
 			}).then(function (result) {
 				ttBalance = result.c[0];
-				console.log("TToken 余额：" + ttBalance);
+				$("#ewBalance").html(ttBalance);
 			}).catch(function (err) {
 				console.log(err.message);
 			});
@@ -244,6 +219,33 @@ App = {
 				alert(error);
 			});
 		});
+	},
+
+	// 获取排名前10的用户
+	topTen: function() {
+		$.ajax({
+				//请求方式
+				type : "GET",
+				//请求地址
+				url : "http://39.108.122.77/v1/topTen",
+				//请求成功
+				success : function(result) {
+					console.log("topTen===="+JSON.stringify(result));
+					var length=result.data.length;
+					for(i=length;i>0;i--){
+						
+						console.error("topTen===="+i);
+						$("#tb_title").after('<tr><th>'+(i)+'</th><th>'+result.data[i-1].code+'</th><th>'+result.data[i-1].cnum+'</th></tr>');
+					}
+					
+					
+				},
+				//请求失败，包含具体的错误信息
+				error : function(e){
+					console.log(e.status);
+					console.log(e.responseText);
+				}
+			});
 	}
 };
 
