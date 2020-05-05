@@ -296,7 +296,8 @@ contract EthFutureControl is EthFutureTree {
         if ((ownerIsRegisted[msg.sender] == false) && msg.sender != owner()) {
             return "该用户尚未注册无法获取邀请码";
         } else {
-            return _createInviteCode();
+            Node storage node = nodes[ownerToIndex[msg.sender]];
+            return node.inviteCode;
         }
     }
 

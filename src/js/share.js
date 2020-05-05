@@ -37,17 +37,66 @@ function copy() {
     });
 }   
 
-function showShareInfo() {
-    var tab = document.getElementById('table_shareInfo');
-    var tradd = tab.insertRow(1);
-    tradd.innerHTML='<td>1</td><td>sdng06</td><td>11.000</td>'; 
+// function showShareInfo() {
+//     var tab = document.getElementById('table_shareInfo');
+//     var tradd = tab.insertRow(1);
+//     tradd.innerHTML='<td>1</td><td>sdng06</td><td>11.000</td>'; 
     
-    tradd = tab.insertRow(2);
-    tradd.innerHTML = '<td>2</td><td>sdng07</td><td>12.000</td>';
+//     tradd = tab.insertRow(2);
+//     tradd.innerHTML = '<td>2</td><td>sdng07</td><td>12.000</td>';
 
-    tradd = tab.insertRow(3);
-    tradd.innerHTML = '<td>3</td><td>sdng08</td><td>13.000</td>';
+//     tradd = tab.insertRow(3);
+//     tradd.innerHTML = '<td>3</td><td>sdng08</td><td>13.000</td>';
+// }
 
+//直推, param 为地址
+function underMe(param){
+	$.ajax({
+            //请求方式
+            type : "GET",
+            //请求地址
+            url : "http://39.108.122.77/v1/underMe?fid="+param,
+            //请求成功
+            success : function(result) {
+                console.log("underMe===="+JSON.stringify(result));
+				var length=result.data.length;
+				for(i=length;i>0;i--){
+					
+					$('#table_header').after('<tr><td>'+(i)+'</td><td>'+result.data[i-1].account+'</td><td>'+result.data[i-1].voteinfo+'</td></tr>');
+				}
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+}
+
+
+//社区 param:地址
+function community(param){
+	$.ajax({
+            //请求方式
+            type : "GET",
+            //请求地址
+            url : "http://39.108.122.77/v1/community?id="+param,
+            //请求成功
+            success : function(result) {
+               console.log("community===="+JSON.stringify(result));
+			   $('#myID').text(result.data.uid);
+			   $('#leadID').text(result.data.fid);
+			   $('#directPersons').text(result.data.myCNum);
+			   $('#directETH').text(result.data.myCVNum);
+			   $('#communityPersons').text(result.data.cnum);
+			   $('#communityETH').text(result.data.vnum);
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
 }
 
 const Page = {
@@ -78,6 +127,11 @@ const Page = {
 
             var account = accounts[0];
 
+            // 获取我的分享
+            underMe(account);
+            // 社区明细
+            community(account);
+
             Page.contracts.EthFuture.deployed().then(function(instance) {
                 return instance.getInvestorCode({from: account});
             }).then(function(result) {
@@ -90,7 +144,6 @@ const Page = {
             }).catch(function(error) {
                 alert(error);
             });
-
         });
     },
 };
@@ -101,5 +154,5 @@ $(function() {
     });
 
     copy();
-    showShareInfo();
+    // showShareInfo();
 }); 
