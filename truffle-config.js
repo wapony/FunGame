@@ -7,6 +7,12 @@ module.exports = {
       // host: "192.168.0.103",
       port: 8545,
       network_id: "*" // Match any network id
+    },
+
+    aliyun: {
+      host: "39.108.122.77",
+      port: 8545,
+      network_id: "*"
     }
   }
 };
