@@ -149,10 +149,11 @@ const Page = {
 };
 
 $(function() { 
-    $(window).on("load", function () {
-		Page.init();
-    });
+    // $(window).on("load", function () {
+	// 	Page.init();
+    // });
 
+    Page.init();
     copy();
     // showShareInfo();
 }); 

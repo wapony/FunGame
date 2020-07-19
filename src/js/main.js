@@ -1,5 +1,4 @@
-
-App = {
+const App = {
 	web3Provider: null,
 	contracts: {},
 	ttBalance: 0,	// ttoken余额
@@ -22,8 +21,8 @@ App = {
 		} else if (window.web3) {
 			App.web3Provider = window.web3.currentProvider;
 		} else {
-			// App.web3Provider = new Web3.providers.HttpProvider("http://127.0.0.1:8545");
-			App.web3Provider = new Web3.providers.HttpProvider("http://39.108.122.77:8545");
+			App.web3Provider = new Web3.providers.HttpProvider("http://127.0.0.1:8545");
+			// App.web3Provider = new Web3.providers.HttpProvider("http://39.108.122.77:8545");
 		}
 		web3 = new Web3(App.web3Provider);
 
@@ -293,3 +292,4 @@ $(function(){
 	});
 }); 
 
+export {App};

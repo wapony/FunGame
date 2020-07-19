@@ -84,8 +84,9 @@ const Page = {
 };
 
 $(function() { 
-	$(window).on("load", function() {
-        $('#ethAmount').attr("value");
-		Page.init();
-	});
+	// $(window).on("load", function() {
+    //     $('#ethAmount').attr("value");
+	// 	Page.init();
+    // });
+    Page.init();
 }); 

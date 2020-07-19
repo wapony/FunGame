@@ -8,13 +8,17 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server",
-    "build": "webpack"
+    "dev": "webpack-dev-server --mode development",
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
+    "html-webpack-plugin": "^4.3.0",
     "lite-server": "^2.3.0",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",

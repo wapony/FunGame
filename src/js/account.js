@@ -1,12 +1,28 @@
+import { App } from "./main.js";	
 
 const Page = {
 	web3Provider: null,
 	contracts: {},
 
 	init: function() {
-		Page.web3Provider = App.web3Provider;
-		Page.contracts = App.contracts;
+		debugger
+		console.log(App);
+
+		this.sum();
+
 	},
+
+	sum: function() {
+		var a = 10;
+		var b = 10;
+		console.log(a + b);
+	}
+
+
+	// init: function() {
+	// 	Page.web3Provider = App.web3Provider;
+	// 	Page.contracts = App.contracts;
+	// },
 
 	// initWeb3: function() {
 	// 	if (window.ethereum) {
@@ -35,9 +51,10 @@ const Page = {
 
 
 $(function() { 
-	$(window).on("load", function() {
-		Page.init();
-	});
+	// $(window).on("load", function() {
+	// 	Page.init();
+	// });
+	Page.init();
 }); 
 
 
